@@ -1,0 +1,28 @@
+{% extends "::layout.html.twig" %}
+
+{% block titlebar %}{% endblock %}
+
+{% block resources_slider %}
+	<link rel="stylesheet" href="{{ asset('skydream/layout/plugins/flexslider/flexslider.css') }}" type="text/css"/>
+	<link rel="stylesheet" href="{{ asset('skydream/layout/plugins/nivo/nivo-slider.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('skydream/layout/plugins/onebyone/css/jquery.onebyone.css') }}" type="text/css"/>
+	<link rel="stylesheet" href="{{ asset('skydream/layout/plugins/onebyone/css/animate.css') }}" type="text/css"/>
+	<script type="text/javascript" src="{{ asset('skydream/layout/plugins/sort/jquery.sort.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('skydream/layout/plugins/nivo/jquery.nivo.slider.pack.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('skydream/layout/plugins/onebyone/jquery.onebyone.min.js') }}"></script>
+{% endblock %}
+
+{% block content_type %}{% endblock %}
+
+{% block content %}
+
+		<div class="block_slogan_1">
+			<p class="text_1">Bienvenue sur la communauté de projets MakinMind !</p>
+			<p class="text_2">
+				Vous êtes détenteur d'une création ou d'un projet débutant ? Nous <strong>protégeons votre projet</strong> tout en vous permettant de <strong>travailler avec des professionnels</strong> triés selon leurs compétences. <br />Vous souhaitez <strong>intégrer un projet innovant</strong> aux côtés de passionnées, nous vous proposons de tenter l'aventure maintenant. Il y a forcément un projet qui saura vous intéresser !
+			</p>
+		</div>
+		<div class="line_2" style="margin:0px 0px 37px;"></div>  
+
+
+{% endblock %}

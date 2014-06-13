@@ -1,0 +1,15 @@
+parameters:
+#    makin_mind_user.example.class: MakinMind\UserBundle\Example
+
+services:
+    makinmind_user.registration.type:
+        class: MakinMind\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: makinmind_user_registration }
+
+    makinmind_user.profile.form.type:
+        class: MakinMind\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: makinmind_user_profile }

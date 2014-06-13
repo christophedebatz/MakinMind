@@ -1,0 +1,60 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Liste des projets{% endblock %}
+{% block titlebar_title %}Les projets{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Mes projets</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{% endblock%}
+
+{% block projects %} class="current_page_item"{% endblock %}
+
+{% block content %}
+	<div id="filtered_container" class="block_portfolio_3 c_3">
+
+	<h2 class="heading_w_icon">Mes projets</h2>
+	<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+	{% if projects is not null %}
+		{% for project in projects %}
+
+		<div class="item web">
+			<div class="image">
+
+				{% if project.logo is not null %}
+					<img style="width:290px; height:180px;" src="{{project.logo.url}}" alt="Project logo">
+				{% else %}
+					<img style="witdh:290px; height:180px;" src="{{ asset('uploads/unknown_project.jpg') }}" alt="project logo">
+				{% endif %}
+
+				<div class="info">
+					<div class="icons">
+						<ul>
+							{% if project.logo is not null %}
+								<li><a href="{{project.logo.url}}.{{project.logo.extension}}" data-rel="prettyPhoto" class="icon_zoom" title="">Zoom</a></li>
+							{% else %}
+								<li><a href="{{ asset('uploads/unknown_project.jpg') }}" data-rel="prettyPhoto" class="icon_zoom" title="">Zoom</a></li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="description">
+				<h6><span>{{project.name|capitalize}}</span></h6>
+				<p class="tags">
+					<a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">Voir le projet</a>
+				</p>
+			</div>
+		</div>
+
+		{% endfor %}
+
+	{% else %}
+	lol
+	{% endif %}
+
+</div>
+{% endblock %}
+
+

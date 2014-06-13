@@ -1,0 +1,44 @@
+
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: Inscription validée {% endblock %}
+
+{% block titlebar_title %}Inscription{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>S'inscrire</span>
+{% endblock %}
+
+
+{% block fos_user_content %}
+<div class="block_contact_us_type_1">
+	
+	<div class="general_info_box success"><a href="#" class="close">Fermer</a>
+		<p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+	</div>
+
+	<div class="separator" style="height:37px;"></div>
+
+	<ul class="list_2">
+		<li><a href="#">Créer un nouveau projet</a></li>
+		<li><a href="#">Rechercher un projet</a></li>
+	</ul>
+
+</div>
+
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+
+		<div class="block_categories">
+			<h6>Ou alors !</h6>
+			<ul class="list_5">
+				<li><a href="{{ path('fos_user_profile_edit') }}">Editer mon profil</a></li>
+				<li><a href="{{ path('fos_user_resetting_request') }}">Rechercher un ami</a></li>
+				<li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
+			</ul>
+		</div>
+	<div class="clearboth"></div>
+</div>
+{% endblock %}

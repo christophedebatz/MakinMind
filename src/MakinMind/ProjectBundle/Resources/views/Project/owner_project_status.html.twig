@@ -1,0 +1,32 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Status recrutement{% endblock %}
+{% block titlebar_title %}Status du recrutement{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Recrutement</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{{parent()}}{% endblock%}
+
+
+
+{% block content %}
+
+	<h1>Etat du recrutement</h1>
+	{% if project.recruitment == 0 %}
+	<p>Le recrutement est actuellement <span style="color:red">fermé</span>.</p>
+	{% else %}
+	<p>Le recrutement est actuellement <span style="color:green">ouvert</span>.</p>
+	{% endif %}
+	<form method="post" action="{{ path('my_project_status', {'id': project.id, 'url': project.url}) }}">
+		<p><input type="submit" value="changer !"/></p>
+	</form>
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+		{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project' : project} %}
+	<div class="separator" style="height:40px;"></div>
+</div>
+{% endblock %}
+

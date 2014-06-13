@@ -1,0 +1,94 @@
+<div id="modalUpload" class="modal large hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    	<h3 id="myModalLabel">Uploadez vos fichiers !</h3>
+  	</div>
+ 	<div class="modal-body">
+		<div class="form">
+
+			<div class="block_tabs_type_1">
+				<div class="tabs">
+					<ul>
+						<li><a href="#1" class="current">Formulaire d'upload</a></li>
+						<li><a href="#2">Consultation de mes uploads</a></li>
+					</ul>
+				</div>
+				<div class="tab_content">
+					<div class="oh" style="padding-top:1px; width: 450px;">
+						<h4 class="fw_n">Informations générales</h4>
+
+							<form id="upload" action="{{ path('resource_asynchronous_upload') }}" enctype="multipart/form-data" method="POST">
+				 	
+							 	<input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
+								<div>
+									<label for="fileselect">Fichier(s):</label>
+									<input type="file" id="fileselect" name="fileselect[]" multiple="multiple"/>
+									<div id="filedrag">ou déposez vos fichiers dans cette zone</div>
+								</div>
+								<div id="submitbutton">
+									<button type="submit">Upload Files</button>
+								</div>
+							</form>
+							<div id="progress"></div>
+							<div id="messages" class="hidden">
+							<p>Status Messages</p>
+							</div>
+					</div>
+					<div class="clearboth"></div>
+				</div>
+
+				<div class="tab_content">
+					<div class="oh" style="padding-top:1px; width: 450px;">
+						<h4 class="fw_n"> </h4>
+
+						<div id="my-uploads">
+							
+							<div id="recent_files" class="hidden" style="clear: both">
+								<h4>Recents</h4>
+	
+							</div>
+							
+							<div id="images_files" style="clear: both">
+								<h4>Images</h4>
+								{% for resource in list_uploads %}
+									{% if (resource.mimeType != null) and (resource.mimeType == "image/jpeg") %}
+									<div class="image">
+										<p>
+										<a href="#" onClick="function() { document.getElementById({{ id_field }}).innerHTML={{ resource.webUrl }} } ">
+											<img src="{{ asset(resource.webUrl()) }}" alt=""/>
+										</a>
+										<span class="desc">Lien du fichier: <br/> {{ resource.WebUrl }} </span>
+										</p>
+									</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+
+							<div id="others_files" style="clear: both;">
+								<h4>Autres fichiers</h4>
+								{% for resource in list_uploads %}
+									{% if (resource.mimeType == null) or (resource.mimeType != "image/jpeg") %}
+										<p>{{ resource.WebUrl }}</p>
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+
+		   		<div class="modal-footer">
+		   			<!-- <button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+		   			<input type="submit" class="btn btn-primary" />	-->
+		   			<a href="#" class="general_button small type_3" data-dismiss="modal" aria-hidden="true"><span>Fermer</span></a> 
+		   		</div>
+			</div>
+		</div>
+	</div>
+</div>
+<a href="#modalUpload" role="button" data-toggle="modal" class="general_button small"><span>Uploader un fichier</span></a>
+<script type="text/javascript">
+	$('.block_tabs_type_1 .tabs').tabs('.block_tabs_type_1 .tab_content', {
+		initialIndex : 0
+	});
+</script>
+<script type="text/javascript" src="{{ asset('skydream/bootstrap/js/filedrag.js') }}"></script>

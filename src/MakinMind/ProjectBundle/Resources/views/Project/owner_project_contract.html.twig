@@ -1,0 +1,84 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Conditions{% endblock %}
+{% block titlebar_title %}Les conditions{% endblock %}
+{% block titlebar_ariane %}
+	{{parent()}} 
+	<a href="{{ path('my_projects') }}">Mes projets</a> / 
+	<a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">{{project.name|title}}</a> / <span>Conditions</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{{parent()}}{% endblock%}
+
+
+{% block content %}
+<div class="block_blog_post_type_1">
+		<div class="content">
+			<h1>Conditions</h1>
+			<p>
+				<div class="block_accordeon_type_1">
+							<div class="button_outer first">
+								<div class="button_inner">Niveau d'étude minimum : Bac + <span id="pbStudies">{{project.applyTerms.pbStudies}}</span></div></div>
+							<div class="accordeon_content">
+								<p>Le niveau d'étude minimum permet d'adapter la difficulté de chaque projet à chaque développeur et ainsi éviter les abandons en cours de projet.</p>
+							</div>
+							
+							<div class="button_outer"><div class="button_inner">Diplôme requis : <span id="firstDiploma">{{project.applyTerms.firstDiploma}}</span></div></div>
+							<div class="accordeon_content" style="display: none;">
+								<p>Le diplôme permet de cibler les connaissance et les capacités des développeurs. Certains seront spécialisé dans un domaine qui ne se prêtera pas forcément à tel ou tel projet.
+
+								{% if project.applyTerms.secondDiploma != '' %}
+									<h6>Autre diplôme valable : {{ project.applyTerms.secondDiploma }}</h6>
+								{% endif %}
+								</p>
+							</div>
+							
+							<div class="button_outer"><div class="button_inner">Spécialisation requise : <span id="specialization">{{project.applyTerms.specialization}}</span></div></div>
+							<div class="accordeon_content" style="display: none;">
+								<p>Tout comme le diplôme, la spécialité d'un cursus permet d'obtenir des connaissances pointues dans un domaine en particulier qui peu (ou non) se prêter à un projet ou à une tâche d'un projet en particulier.</p>
+							</div>
+
+							<div class="button_outer"><div class="button_inner">Expérience professionnelle requise : <span id="numberWorkedYears">{{project.applyTerms.numberWorkedYears}}</span> année(s)</div></div>
+							<div class="accordeon_content" style="display: none;">
+								<p>Certains projet nécessite des personnes ayant déjà travaillé avec une technologie ou avec un outil en particulier. Ces expériences professionnelles peuvent apporter maîtrise et gain de temps au projet.</p>
+							</div>
+
+							<div class="button_outer"><div class="button_inner">Temps de travail hebdomadaire : <span id="hoursPerWeek">{{project.applyTerms.hoursPerWeek}}</span> heure(s)</div></div>
+							<div class="accordeon_content" style="display: none;">
+								<p>Le bénéficiaire du projet annonce une approximation du temps que vous devrez consacrer au projet si vous le rejoingnez. En postulant au projet, vous vous engagez à être disponible pendant cette durée hebdomadaire.</p>
+							</div>
+
+							<div class="button_outer"><div class="button_inner">Contrat parallèle autorisé : <span id="paralleleContract">{% if project.applyTerms.paralleleContract == 1 %}oui {% else %} non {% endif %}</span></div></div>
+							<div class="accordeon_content" style="display: none;">
+								<p>En tant qu'employeur temporaire, le bénéficiaire du projet peut ou non décider de si vous avez le droit d'être engagé ailleurs, c'est-à-dire qu'il peut vouloir votre exclusivité durant le développement du projet.</p>
+							</div>
+						</div>
+			</p>
+
+			<div class="separator" style="height:20px;"></div>
+
+			<h1>Contrat</h1>
+			<p>Merci de lire attentivement le présent contrat afin d'en saisir tous les enjeux ainsi que de comprendre en quoi consiste vos engagements.</p>
+			<iframe src="http://www.emploi.gouv.fr/_pdf/fiche_contrat_professionnalisation.pdf?id=850#toolbar=0" frameborder="0" width="100%" height="350">
+				<p>Votre navigateur ne supporte pas les iframes</p>
+			</iframe>
+			<p><a href="http://www.emploi.gouv.fr/_pdf/fiche_contrat_professionnalisation.pdf">Afficher le contrat</a></p>
+		</div>
+</div>
+
+<script type="text/javascript">
+			$('.block_accordeon_type_1').tabs('.block_accordeon_type_1 div.accordeon_content', {
+										tabs : '.button_outer',
+										effect : 'slide',
+										currentClose: false,
+										initialIndex : 0
+			});
+</script>
+{% endblock %}
+
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+	{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project' : project} %}
+</div>
+{% endblock %}

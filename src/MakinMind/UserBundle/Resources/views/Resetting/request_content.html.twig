@@ -1,0 +1,25 @@
+
+{% if invalid_username is defined %}
+    <div class="general_info_box error demo"><a href="#" class="close">Fermer</a>
+        <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+    </div>
+{% endif %}
+
+<div class="form">
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+
+            <div class="one_third">
+                <p class="label">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</p>
+                <div class="field"><input type="text" id="username" name="username" class="req" /></div>
+            </div>
+
+             <div class="one_third">
+                <p class="label">&nbsp;</p>
+                <div class="button">
+                <input type="submit" class="general_button" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}">
+            </div>
+            </div>
+
+            
+    </form>
+</div>

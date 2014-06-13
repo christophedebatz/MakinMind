@@ -1,0 +1,73 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: Connexion {% endblock %}
+
+{% block titlebar_title %}Connexion{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Se connecter</span>
+{% endblock %}
+
+{% block fos_user_content %}
+<div class="block_contact_us_type_1">
+	<div class="send_message">
+		<h4>Se connecter</h4>
+		<p class="text_subtitle_1">Merci de remplir le formulaire de connexion pour accéder à votre interface</p>
+
+		{% if error %}
+			<div class="general_info_box error demo"><a href="#" class="close">Fermer</a>
+				<p>{{ error|trans({}, 'FOSUserBundle') }}</p>
+			</div>
+		{% endif %}
+
+		
+		<div class="form">
+			<form action="{{ path('fos_user_security_check') }}" method="post">
+				<div class="one_third">
+					<p class="label">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }} <span>(requis)</span></p>
+					<div class="field"><input type="text" id="username" name="_username" value="{{ last_username }}" class="req"></div>
+				</div>
+				
+				<div class="one_third">
+					<p class="label">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }} <span>(requis)</span></p>
+					<div class="field"><input type="password" id="password" name="_password" class="req"></div>
+				</div>
+				
+				<div class="one_third last">
+					<p class="label">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</p>
+					<div><input type="checkbox" id="remember_me" name="_remember_me" value="on" class="req" /></div>
+		        </div>
+
+		        <div class="clearboth"></div>
+
+				<div class="button">
+					<input type="submit" class="general_button" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">
+				</div>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+			</form>
+		</div>
+
+		<div class="separator" style="height:37px;"></div>
+
+		<ul class="list_2">
+			<li>Pas encore membre ? <a href="{{ path('fos_user_registration_register') }}">Inscris toi vite ici !</a></li>
+			<li>Mot de passe oublié ? <a href="{{ path('fos_user_resetting_request') }}">Nous nous occupons de ça !</a></li>
+		</ul>
+
+	</div>
+</div>
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+
+		<div class="block_categories">
+			<h6>Ou alors !</h6>
+			<ul class="list_5">
+				<li><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+				<li><a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a></li>
+		</ul>
+	</div>
+	<div class="clearboth"></div>
+</div>
+{% endblock %}

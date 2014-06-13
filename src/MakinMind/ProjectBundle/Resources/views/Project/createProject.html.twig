@@ -1,0 +1,123 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Nouveau projet{% endblock %}
+{% block titlebar_title %}Nouveau projet{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Nouveau projet</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{% endblock%}
+
+{% block projects %} class="current_page_item"{% endblock %}
+
+{% block resources %}
+	{{parent()}} 
+	
+	<link rel="stylesheet" href="{{ asset('skydream/bootstrap/css/bootstrap.min.css') }}" type="text/css">
+	<script type="text/javascript" src="{{ asset('skydream/bootstrap/js/bootstrap.min.js') }}"></script>
+
+	<script type="text/javascript">
+    function AddItem(Text,Value)
+    {
+        var opt = document.createElement("option");
+
+        opt.text = Text;
+        opt.value = Value;
+        document.getElementById("makinmind_projectbundle_projecttype_domains").options.add(opt);
+
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+
+<div style="float: right; margin-right: 80px;">
+	<img src="{{ asset('skydream/images/pic_slider_1_1_1.png') }}" alt="Projet" />
+</div>
+
+
+<form method="post" {{ form_enctype(formProject) }}>
+	<div class="oh">
+		<div class="block_contact_us_type_1">
+
+			{{ form_errors(formProject) }}
+
+		    <div class="send_message">
+				<div class="form" style="width: 75%;">
+
+					<div id="modalAddDomain" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 		<div class="modal-header">
+				    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				    		<h3 id="myModalLabel">Nouveau domaine</h3>
+				  		</div>
+					 	<div class="modal-body">
+						    <form>
+					   			<div class="field">
+									<input type="text" placeHolder="ex: Symfony 2" name="newDomain" />
+								</div>
+					   			 
+					   			<div class="modal-footer">
+					   			 	<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+					   			 	<input type="button" value="Ajouter" class="btn btn-primary" onclick="AddItem(this.form.newDomain.value, this.form.newDomain.value); $('#modalAddDomain').modal('hide');" />
+					   			</div>
+					 		</form>
+					   	</div>
+					</div>
+
+
+					<h3 class="heading_w_icon">Informations générales</h3>
+					<div class="line_1" style="margin:0px 0px 19px;"></div>
+				
+					<p class="label">{{ form_label(formProject.name, 'Nom du projet') }}</p>
+					<div class="field">{{ form_widget(formProject.name) }}</div>
+		
+			   		<p class="label">{{ form_label(formProject.shortDescription, 'Résumé du projet :') }}</p>
+					<div class="textarea">{{ form_widget(formProject.shortDescription) }}</div>
+					<p class="label">{{ form_label(formProject.longDescription, 'Déscription détaillée du projet :') }}</p>
+					<div class="textarea">{{ form_widget(formProject.longDescription) }}</div>
+
+
+
+					<div class="separator" style="height:40px;"></div>
+					<h3 class="heading_w_icon">Informations temporelles</h3>
+					<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+					<p class="label">{{ form_label(formProject.beginDate, 'Date de début :') }}</p>
+					<div class="field" style="border: none;">{{ form_widget(formProject.beginDate) }}</div>
+					<p class="label">{{ form_label(formProject.endingDate, 'Date de fin :') }}</p>
+					<div class="field" style="border: none;">{{ form_widget(formProject.endingDate) }}</div>
+
+					<div class="separator" style="height:40px;"></div>
+					<h3 class="heading_w_icon">Conditions pour postuler</h3>
+					<div class="line_1" style="margin:0px 0px 19px;"></div>
+					
+					<p class="label">{{ form_label(formProject.domains, 'Domaine(s) :') }}</p>
+					<div style="padding: 5px; margin-bottom: 8px;">{{ form_widget(formProject.domains) }} <a href="#modalAddDomain" role="button" data-toggle="modal" class="general_button small"><span>Ajouter...</span></a></div>
+					<p class="label">{{ form_label(formProject.applyTerms.pbStudies, 'Niveau d\'étude en année :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.pbStudies) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.firstDiploma, 'Diplôme requis :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.firstDiploma) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.secondDiploma, 'Dexième diplôme requis (optionnel) :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.secondDiploma) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.specialization, 'Spécialisation :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.specialization) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.numberWorkedYears, 'Expérience professionnelle en année :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.numberWorkedYears) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.hoursPerWeek, 'Expérience professionnelle en année :') }}</p>
+					<div class="field">{{ form_widget(formProject.applyTerms.hoursPerWeek) }}</div>
+					<p class="label">{{ form_label(formProject.applyTerms.paralleleContract, 'Contrat parallèle autorisé :') }}</p>
+					<div class="field" style="border: none;">{{ form_widget(formProject.applyTerms.paralleleContract) }}</div>	
+			    	<div class="separator" style="height:20px;"></div>
+			    	
+					<div class="button">
+						<input type="submit" class="general_button small" /> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_rest(formProject) }}
+</form>
+
+{% endblock %}
+
+

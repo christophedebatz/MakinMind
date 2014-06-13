@@ -1,0 +1,7 @@
+portal_home:
+    pattern:  /
+    defaults: { _controller: MakinMindPortalBundle:Default:index }
+
+about_us:
+    pattern:  /about-us
+    defaults: { _controller: MakinMindPortalBundle:Default:aboutUs }

@@ -1,0 +1,27 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: profil de {{user.username}}{% endblock %}
+
+{% block titlebar_title %}{{user.username}}{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>{{user.username}}</span>
+{% endblock %}
+
+{% block content_type %}{{ parent() }}{% endblock %}
+
+{% block fos_user_content %}
+{% include "FOSUserBundle:Profile:show_content.html.twig" %}
+{% endblock fos_user_content %}
+
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+		<h6 style="text-align: center;">{{user.username}}</h6>
+		<div style="text-align: center;">
+			<img src="{{ asset('skydream/images/team3.jpg') }}" alt="Photo de {{ user.username }}" style="border: 1px solid #CCCCCC; padding: 2px;" />
+		</div>
+	<div class="separator" style="height:40px;"></div>
+</div>
+{% endblock %}
+

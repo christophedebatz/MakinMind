@@ -1,0 +1,626 @@
+<?php
+
+namespace MakinMind\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * MakinMind\UserBundle\Entity\User
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="MakinMind\UserBundle\Entity\UserRepository")
+ */
+class User
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $firstname
+     *
+     * @ORM\Column(name="firstname", type="string", length=40)
+     */
+    private $firstname;
+
+    /**
+     * @var string $lastname
+     *
+     * @ORM\Column(name="lastname", type="string", length=50)
+     */
+    private $lastname;
+
+    /**
+     * @var date $birthdate
+     *
+     * @ORM\Column(name="birthdate", type="date")
+     */
+    private $birthdate;
+
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=60)
+     */
+    private $email;
+
+    /**
+     * @var string $phone
+     *
+     * @ORM\Column(name="phone", type="string", length=10)
+     */
+    private $phone;
+
+    /**
+     * @var string $address
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+
+    /**
+     * @var string $zipcode
+     *
+     * @ORM\Column(name="zipcode", type="string", length=5)
+     */
+    private $zipcode;
+
+    /**
+     * @var string $city
+     *
+     * @ORM\Column(name="city", type="string", length=40)
+     */
+    private $city;
+
+    /**
+     * @var string $country
+     *
+     * @ORM\Column(name="country", type="string", length=3)
+     */
+    private $country;
+
+    /**
+     * @var string $job
+     *
+     * @ORM\Column(name="job", type="string", length=50)
+     */
+    private $job;
+
+    /**
+     * @var string $company
+     *
+     * @ORM\Column(name="company", type="string", length=30)
+     */
+    private $company;
+
+    /**
+     * @var string $login
+     *
+     * @ORM\Column(name="login", type="string", length=20)
+     */
+    private $login;
+
+    /**
+     * @var string $password
+     *
+     * @ORM\Column(name="password", type="string", length=160)
+     */
+    private $password;
+
+    /**
+     * @var smallint $rank
+     *
+     * @ORM\Column(name="rank", type="smallint")
+     */
+    private $rank;
+
+    /**
+     * @var integer $nbContracts
+     *
+     * @ORM\Column(name="nbContracts", type="integer")
+     */
+    private $nbContracts;
+
+    /**
+     * @var date $suscribeDate
+     *
+     * @ORM\Column(name="suscribeDate", type="date")
+     */
+    private $suscribeDate;
+
+    /**
+     * @var string $workSocialURL
+     *
+     * @ORM\Column(name="workSocialURL", type="string", length=255)
+     */
+    private $workSocialURL;
+
+    /**
+     * @var string $facebookURL
+     *
+     * @ORM\Column(name="facebookURL", type="string", length=255)
+     */
+    private $facebookURL;
+
+    /**
+     * @var string $twitterURL
+     *
+     * @ORM\Column(name="twitterURL", type="string", length=255)
+     */
+    private $twitterURL;
+
+    /**
+     * @var boolean $twitterShowTweets
+     *
+     * @ORM\Column(name="twitterShowTweets", type="boolean")
+     */
+    private $twitterShowTweets;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="MakinMind\ResourceBundle\Entity\Resource", cascade={"persist"})
+     */
+    private $resume;
+
+    /**
+     * @ORM\OneToOne(targetEntity="MakinMind\ResourceBundle\Entity\Resource", cascade={"persist"})
+     */
+    private $picture;
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string 
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param date $birthdate
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return date 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set zipcode
+     *
+     * @param string $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * Get zipcode
+     *
+     * @return string 
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set job
+     *
+     * @param string $job
+     */
+    public function setJob($job)
+    {
+        $this->job = $job;
+    }
+
+    /**
+     * Get job
+     *
+     * @return string 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
+
+    /**
+     * Set company
+     *
+     * @param string $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+
+    /**
+     * Get company
+     *
+     * @return string 
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Set login
+     *
+     * @param string $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * Get login
+     *
+     * @return string 
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set rank
+     *
+     * @param smallint $rank
+     */
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+    }
+
+    /**
+     * Get rank
+     *
+     * @return smallint 
+     */
+    public function getRank()
+    {
+        return $this->rank;
+    }
+
+    /**
+     * Set nbContracts
+     *
+     * @param integer $nbContracts
+     */
+    public function setNbContracts($nbContracts)
+    {
+        $this->nbContracts = $nbContracts;
+    }
+
+    /**
+     * Get nbContracts
+     *
+     * @return integer 
+     */
+    public function getNbContracts()
+    {
+        return $this->nbContracts;
+    }
+
+    /**
+     * Set suscribeDate
+     *
+     * @param date $suscribeDate
+     */
+    public function setSuscribeDate($suscribeDate)
+    {
+        $this->suscribeDate = $suscribeDate;
+    }
+
+    /**
+     * Get suscribeDate
+     *
+     * @return date 
+     */
+    public function getSuscribeDate()
+    {
+        return $this->suscribeDate;
+    }
+
+    /**
+     * Set workSocialURL
+     *
+     * @param string $workSocialURL
+     */
+    public function setWorkSocialURL($workSocialURL)
+    {
+        $this->workSocialURL = $workSocialURL;
+    }
+
+    /**
+     * Get workSocialURL
+     *
+     * @return string 
+     */
+    public function getWorkSocialURL()
+    {
+        return $this->workSocialURL;
+    }
+
+    /**
+     * Set facebookURL
+     *
+     * @param string $facebookURL
+     */
+    public function setFacebookURL($facebookURL)
+    {
+        $this->facebookURL = $facebookURL;
+    }
+
+    /**
+     * Get facebookURL
+     *
+     * @return string 
+     */
+    public function getFacebookURL()
+    {
+        return $this->facebookURL;
+    }
+
+    /**
+     * Set twitterURL
+     *
+     * @param string $twitterURL
+     */
+    public function setTwitterURL($twitterURL)
+    {
+        $this->twitterURL = $twitterURL;
+    }
+
+    /**
+     * Get twitterURL
+     *
+     * @return string 
+     */
+    public function getTwitterURL()
+    {
+        return $this->twitterURL;
+    }
+
+    /**
+     * Set twitterShowTweets
+     *
+     * @param boolean $twitterShowTweets
+     */
+    public function setTwitterShowTweets($twitterShowTweets)
+    {
+        $this->twitterShowTweets = $twitterShowTweets;
+    }
+
+    /**
+     * Get twitterShowTweets
+     *
+     * @return boolean 
+     */
+    public function getTwitterShowTweets()
+    {
+        return $this->twitterShowTweets;
+    }
+
+    /**
+     * Set resume
+     *
+     * @param MakinMind\ResourceBundle\Entity\Resource $resume
+     */
+    public function setResume(\MakinMind\ResourceBundle\Entity\Resource $resume)
+    {
+        $this->resume = $resume;
+    }
+
+    /**
+     * Get resume
+     *
+     * @return MakinMind\ResourceBundle\Entity\Resource 
+     */
+    public function getResume()
+    {
+        return $this->resume;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param MakinMind\ResourceBundle\Entity\Resource $picture
+     */
+    public function setPicture(\MakinMind\ResourceBundle\Entity\Resource $picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return MakinMind\ResourceBundle\Entity\Resource 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+}

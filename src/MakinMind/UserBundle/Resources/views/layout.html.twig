@@ -1,0 +1,15 @@
+{% extends "::layout.html.twig" %}
+
+{% block slider %}{% endblock %}
+
+{% block content %}
+
+{% for key, message in app.session.getFlashes() %}
+        <div class="{{ key }}">
+            {{ message|trans({}, 'FOSUserBundle') }}
+        </div>
+        {% endfor %}
+
+		{% block fos_user_content %}{% endblock %}
+
+{% endblock %}

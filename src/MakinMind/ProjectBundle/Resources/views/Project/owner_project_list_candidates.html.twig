@@ -1,0 +1,62 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Les candidats{% endblock %}
+{% block titlebar_title %}Les candidats{% endblock %}
+{% block titlebar_ariane %}
+{{parent()}} 
+	<a href="{{ path('my_projects') }}">Mes projets</a> / 
+	<a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">{{project.name|title}}</a> / <span>Candidats</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{{parent()}}{% endblock%}
+
+
+{% block content %}
+<div class="separator" style="height:37px;"></div>
+<div class="block_portfolio_w_sidebar c_3">
+	{% for request in requests %}
+		<div class="item">
+			<div class="image">
+				{% if request.user.picture is not null %}
+					<img style="height:200px;" src="{{request.user.picture.url}}" alt="{{request.user.lastname}} picture"/
+				{% else %}
+					<img style="height:200px;" src="{{ asset('uploads/unknown.gif') }}" alt="unknown picture"/>
+				{% endif %}
+				<div class="info">
+					<div class="icons">
+						<ul>
+							<li>
+								{% if request.user.picture is not null %}
+									<a href="{{request.user.picture.url}}" data-rel="prettyPhoto" class="icon_zoom" title="">Zoom</a>
+								{% else %}
+									<img style="height:240px;" src="{{ asset('uploads/unknown.gif') }}" alt="unknown picture"/>
+								{% endif %}
+							</li>
+							<li><a href="url page user .html" class="icon_link">Link</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<div class="description">
+				<h6>{{request.user.firstname|title ~" "~ request.user.lastname|upper}}</h6>
+				<p>Né(e) le {{request.user.birthdate|date("d/m/Y")}} en {{request.user.country}}</p>
+				<p>{{request.user.job|title}} chez {{request.user.company}}</p>
+				<p>Tél : {{request.user.phone}}</p> 
+			</div>
+			
+			<div class="line_2"></div>
+			
+			<div class="clearboth"></div>
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+		{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project' : project} %}
+	<div class="separator" style="height:40px;"></div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="keywords"  content="" />
+<meta name="description" content="" />
+<title>Editable jquery tree with php codes</title>
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/style.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/makinmindeditor/css/style.css')}}" />
+
+<!-- for routing in js file -->
+<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+<!-- default tree manager's js files -->
+<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/jquery/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/jquery/plugins/jquery.cookie.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/jquery.simple.tree.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/langManager.js')}}" ></script>
+<!--<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/treeOperations.js')}}"></script>-->
+<script type="text/javascript">
+var simpleTree;
+var structureManagerURL = Routing.generate('EditorBundle_structManage', {'id': {{project.id}}});
+var dragOperation = true;
+var operationFailed = -1;
+
+function TreeOperations()
+{
+	
+	treeOps = this;
+	this.ajaxActive = true;
+	this.treeBusy = false;
+	this.timer = 0;
+	this.folderElement = false;
+	this.lookAtFolderElement = false;
+
+	
+	this.inputText = "<input type='text' id='inputText' maxlength='30'>";
+	this.inputId = '#inputText';
+//*******************************************************	
+	for (var n in arguments[0]) 
+	{ 
+		this[n] = arguments[0][n]; 
+	}
+//*******************************************************
+	this.isTreeBusy = function()
+	{
+		if (this.treeBusy == true){
+			alert('Only one operation can be active at any time.');
+		}
+		return (this.treeBusy);
+	}
+	this.setTreeBusy = function(busy)
+	{
+		this.treeBusy = busy;
+	}
+//**************************************************************
+	this.showOperationInfo = function (text){
+		
+		$('#processing').html(text);		
+		
+		$('#processing').fadeIn(1, function(){			
+			treeOps.timer = setTimeout("$('#processing').fadeOut(1000)", 1000);			
+		});
+		
+	}
+//********************************************************
+	this.escapeChars = function(str) {	
+//		var ch = Array();	
+//		ch[0] = '.';
+//		ch[1] = '[';
+//		ch[2] = ']';
+//		ch[3] = '/';
+//		ch[4] = '@';
+//		ch[5] = ' ';
+//		var i = 0;
+//		for (i = 0; i < ch.length; i++) 
+//		{
+//			str = str.replace(ch[i], '\\' + ch[i]);
+//		}		
+		
+		str = str.replace(/\./g, '\\.');
+		str = str.replace(/\[/g, '\\[');
+		str = str.replace(/\]/g, '\\]');
+		str = str.replace(/\//g, '\\/');
+		str = str.replace(/ /g, '\\ ');
+		str = str.replace(/,/g, '\\,');
+		
+		return str;
+	}
+//*******************************************************
+	this.showInProcessInfo = function(show)
+	{
+		if (show == true) {
+			clearTimeout(treeOps.timer);
+			$('#processing').hide();
+			$('#processing').html('Completing your request.');
+			$('#processing').show();
+			
+		}
+		else {
+			$('#processing').hide();
+		}		
+	}
+//*******************************************************
+	this.trGetSelected = function()
+	{
+		return simpleTree.get(0).getSelected();
+	}
+
+
+	this.trGetSelectedWithAlert = function()
+	{
+		var selectedNode = treeOps.trGetSelected();
+		if (selectedNode.html() == null){
+			alert('To make an operation please click an item to activate it.');
+			return null;
+		}
+		return selectedNode;
+	}
+//**********************************************************
+//         YENI ELEMAN EKLEME FONKSIYONLARI
+//**********************************************************
+	this.trAddElement = function(result)
+	{
+		//treeOps.treeBusy = false; ajax makes it false
+		var info;
+		if (typeof(result) == "undefined")
+		{
+			info.id = "null";
+			info.name = "undefined";
+		}
+		else {
+			info = eval(result);
+		}	
+		$('#inputText').parent().attr('id', info.elementId);
+		$('#inputText').replaceWith("<span>"+info.elementName+"</span>");
+		
+		var elementId = treeOps.escapeChars(info.elementId);
+		
+		simpleTree.get(0).setTreeNodes($('#' + elementId).get(0));
+		if (info.slave == 0) { // eger dosya doc degilse klas�r yapiliyor.
+			simpleTree.get(0).convertToFolder($("#" + elementId));
+		}
+	}    
+	/////////////////////////////////////////////////////////////
+	this.addElementReq = function(folder)
+	{    // Menu de yeni eleman ekle se�enegi tiklandiginda ilk bura �agrilir 
+		 // ve yeni bir yazi alani eklenir.
+		
+		if ( treeOps.isTreeBusy() == true ||  
+			 treeOps.trGetSelectedWithAlert() == null
+			) 
+		{
+			// aga�ta baska bir islem yapiliyorsa veya se�ili eleman 
+			// yok ise islem yapilmasi engelleniyor
+			return;
+		}			
+		dragOperation = false;		
+		
+		if (treeOps.trGetSelected().get(0).className.indexOf('close') >= 0)
+		{
+			var childUl = $('>ul', treeOps.trGetSelected().get(0));
+			if (childUl.is('.ajax')) {
+				simpleTree.get(0).nodeToggle(treeOps.trGetSelected().get(0), treeOps.addElementReq);
+				treeOps.lookAtFolderElement = true;
+				treeOps.folderElement = folder;				
+				return;
+			}
+			else {				
+				simpleTree.get(0).nodeToggle(treeOps.trGetSelected().get(0));
+			}
+		}
+		
+		
+		treeOps.treeBusy = true;	
+		var content = $.trim($('ul', treeOps.trGetSelected()).html());
+
+		if (content == "") 
+		{
+			// Klas�r�n alti bosken altina yeni eleman eklenemiyordu bu y�zden asagidaki kodlar yazildi.
+			// eger IE de fazladan g�z�ken dosyanin g�z�kmemesi i�in son iki silme (remove) satiri eklendi.
+			$('ul', treeOps.trGetSelected()).html('<li class="line">&nbsp;</li><li class="doc-last"></li><li class="line-last"/>');
+			
+			simpleTree.get(0).addNode("newElement", "name", null);
+			treeOps.trGetSelected().prev().remove();
+			treeOps.trGetSelected().prev().remove();
+		}
+		else {
+			simpleTree.get(0).addNode("newElement", "name", null);			
+		}
+		
+		
+		var slave = 1;
+		
+		if (treeOps.lookAtFolderElement == true){
+			folder = treeOps.folderElement;
+		}
+		treeOps.lookAtFolderElement = false;
+		
+		if (folder == true) {
+			simpleTree.get(0).convertToFolder(treeOps.trGetSelected());
+			slave = 0;
+		}
+		
+		treeOps.trGetSelected().html(treeOps.inputText);
+		$('#inputText').focus();
+		
+		$('#inputText').bind("keypress", 
+			 function(evt)
+			 {												
+				if (evt.keyCode == 13) // when pressed enter 
+				{	
+				    var name = $('#inputText').attr('value');										
+					var ownerEl = $('#inputText').parent().parent().parent().attr('id');
+					var params = "action=insertElement"+"&name="+name+"&ownerEl="+ownerEl+"&slave="+slave;
+					treeOps.ajaxReq(params, structureManagerURL, treeOps.trAddElement);
+					dragOperation = true;
+				}
+				else if (evt.keyCode == 27) // when pressed esc 
+				{	
+				    
+					treeOps.setTreeBusy(false);
+					dragOperation = true;
+					if ($('#inputText').parent().attr('class').indexOf('last')>=0) {
+						var className = $('#inputText').parent().prev().prev().attr('class');
+						$('#inputText').parent().prev().prev().attr('class',className+'-last');										
+					}
+					//$('#inputText').parent().prev().remove();
+					$('#inputText').parent().remove();
+				}
+				//$('#inputText').unbind("keypress");
+			}
+			);		
+	}
+/*******************************************************
+	ELEMAN SILME FONKSIYONLARI
+********************************************************/
+	this.trDeleteElement = function(result)
+	{
+		if (result != operationFailed)	{		
+			simpleTree.get(0).delNode();				
+		}
+		else{
+			alert("Error in operation");
+		}
+	}
+	/////////////////////////////////////////////////////
+	this.deleteElementReq = function()
+	{	
+		if ( treeOps.isTreeBusy() == true ||  
+			 treeOps.trGetSelectedWithAlert() == null
+			) 
+		{
+			// aga�ta baska bir islem yapiliyorsa veya se�ili eleman 
+			// yok ise islem yapilmasi engelleniyor
+			return;
+		}	
+	
+		if (confirm('Are you sure you want to delete this item?'))
+		{
+			treeOps.treeBusy = true;
+			var ownerEl = treeOps.trGetSelected().parent().parent().attr('id');
+			var url1  = Routing.generate('EditorBundle_checkFileOwner', { "fileParent": ownerEl, "file": treeOps.trGetSelected().attr('id') });
+			$.ajax({
+	            type: "POST",
+	            url: url1,
+	            data: $(this).serialize(),
+	            cache: false,
+	            dataType : 'text',
+	            success: function(data){
+	            	var response=data;
+	                if(parseInt(response) == 0)
+	                {
+	                	treeOps.treeBusy = false;
+	                   alert("Vous n'avez pas le droit de supprimer ce fichier ");
+	               	}
+	               	else
+	               	{	      
+		 				var params = "action=deleteElement&elementId="+treeOps.trGetSelected().attr('id')
+		 				 + "&ownerEl=" + ownerEl;
+						treeOps.ajaxReq(params, structureManagerURL, treeOps.trDeleteElement);
+	               	}
+	            }
+	        });
+		}	
+	}
+/*******************************************************	
+	ELEMANIN ISMINI DEGISTIRME FONKSIYONLARI
+*******************************************************/
+	this.trUpdateElementName = function(result)
+	{
+		var info = eval('('+result +')');
+		var tmp_node = "<span>"+info.elementName+"</span>";
+		$('#inputText').parent().attr('id', info.elementId);
+
+		var elementId = treeOps.escapeChars(info.elementId);
+		
+		$('#inputText', '#'+ elementId).replaceWith(tmp_node);
+		
+		$('ul.ajax>li.doc-last', '#' + elementId).attr('id', info.elementId).html("{url:"+ structureManagerURL +"?action=getElementList&ownerEl="+ info.elementId +"}");
+		simpleTree.get(0).setTreeNodes2($('#' + elementId));
+	}
+
+	this.updateElementNameReq = function()
+	{
+		if ( treeOps.isTreeBusy() == true ||  
+			 treeOps.trGetSelectedWithAlert() == null
+			) 
+		{
+			return;
+		}			
+		treeOps.treeBusy = true;
+		
+		var elementName = $('span.active').text();
+		var elementId = treeOps.trGetSelected().attr('id');	
+		
+		$('span:first', treeOps.trGetSelected()).replaceWith("<input type='text' id='inputText' value='"+elementName+"'/>");	
+		$('#inputText').focus();
+		$('#inputText').bind("keypress",
+								 function(evt)
+								 {
+									 if (evt.keyCode == 13) { //pressed enter
+										var name = $('#inputText').attr('value'); 	
+										var ownerEl = $('#inputText').parent().parent().parent().attr('id');
+									 	var params = "action=updateElementName&name="+name+"&elementId="+elementId+"&ownerEl="+ownerEl;
+									 	
+										treeOps.ajaxReq (params, structureManagerURL, treeOps.trUpdateElementName);										
+									 }
+									 else if (evt.keyCode == 27) { // pressed esc
+									 	treeOps.setTreeBusy(false);
+									    $('#inputText').replaceWith("<span>"+elementName+"</span>");
+									 	simpleTree.get(0).setTreeNodes2($('#'+elementId))
+									 }
+								 }
+							);
+		
+	}
+/**********************************
+ * Expand All
+***********************************/	 
+	this.expandAll = function (obj)
+	    {
+			var folder = $('.folder-close, .folder-close-last',obj);				
+			
+			$(folder).each(function(){
+				simpleTree.get(0).nodeToggle(this, treeOps.expandAll);
+			});				
+		}
+/**********************************
+ * Collapse All
+***********************************/	
+	this.collapseAll = function (){
+			$('.folder-open, .folder-open-last').each(function(){
+				simpleTree.get(0).nodeToggle(this);
+			});
+	}
+
+//*******************************************************
+	this.trReload = function()
+	{
+		//simpleTree.get(0).setAjaxNodes(getSelected(), null, null);
+	}
+//*******************************************************
+	this.isInt = function(t) {
+		try {
+			//var t = eval(x);
+			var y = parseInt(t);
+			
+			if (isNaN(y)) {
+				return false;
+			}
+			return t == y && t.toString() == y.toString();
+		}
+		catch(ex){
+			
+		}
+		return false;
+ 	} 
+//*******************************************************	
+	this.ajaxReq = function(params, url, callback, overrideSuccessFunc)
+	{
+		if (treeOps.ajaxActive == true)
+		{
+			var successFunction = function(result){	
+						
+							treeOps.treeBusy = false;
+							treeOps.showInProcessInfo(false);
+							
+							try {
+								var t = eval(result);
+								// if result is less than 0, it means an error occured														
+								if (treeOps.isInt(t) == true  && t < 0) { 
+									if(Math.abs(t) == 1)
+										alert('An error occured in the operation');
+									else if(Math.abs(t) == 2)
+										alert('The element with the same name already exists');																			
+								}	
+								else{ // if result is greater than 0 it means operation is succesfull
+									callback(result);
+									treeOps.showOperationInfo('Request is completed succesfully.');
+								}
+							}
+							catch(ex) {	// if result is string it means operation is succesfull				
+								callback(result);
+								treeOps.showOperationInfo('Request is completed succesfully.');								
+							}
+			};
+			
+			if (typeof overrideSuccessFunc == 'function') {
+				successFunction = overrideSuccessFunc;	
+			}
+		 	$.ajax({
+   					type: 'POST',
+					url: url,
+					data: params,
+					dataType: 'script',
+					timeout:100000,
+					beforeSend: function(){ treeOps.showInProcessInfo(true);  },
+					success: successFunction,
+					failure: function(result) {
+					alert(result);								
+							treeOps.treeBusy = false;
+							treeOps.showInProcessInfo(false);
+							if (result == operationFailed) {
+								alert("Error in ajax.")
+							}
+					},
+					error: function(par1, par2, par3){
+						treeOps.showInProcessInfo(false);
+						alert("Error in ajax..")
+					}
+			});
+		}
+		else {
+			callback();
+			treeOps.treeBusy = false;
+		}
+	}
+}
+
+</script>
+<script type="text/javascript" src="{{asset('bundles/makinmindeditor/js/init.js')}}"></script>
+
+</head>
+<body>
+	<p id="idProject" hidden="true">{{project.id}}</p>
+	<div class="contextMenu" id="myMenu1">	
+			<li class="addFolder">
+				<img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/folder_add.png')}}" /> </li>
+			<li class="addDoc"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/page_add.png')}}" /> </li>	
+			<li class="edit"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/folder_edit.png')}}" /> </li>
+			<li class="delete"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/folder_delete.png')}}" /> </li>
+			<li class="expandAll"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/expand.png')}}"/> </li>
+			<li class="collapseAll"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/collapse.png')}}"/> </li>	
+	</div>
+	<div class="contextMenu" id="myMenu2">
+			<li class="edit"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/page_edit.png')}}" /> </li>
+			<li class="delete"><img src="{{asset('bundles/makinmindeditor/js/jquery/plugins/simpleTree/images/page_delete.png')}}" /> </li>
+	</div>
+
+	<div id="wrap">
+		<div id="annualWizard">	
+				<ul class="simpleTree" id='pdfTree'>		
+						<li class="root" id='{{rootId}}'><span>{{rootName}}</span>
+							<ul>{{treeElements|raw}}</ul>				
+						</li>
+				</ul>						
+		</div>	
+		
+	</div> 
+	<div id='processing'></div>
+</body>
+</html>

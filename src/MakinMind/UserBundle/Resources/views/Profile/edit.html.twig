@@ -1,0 +1,38 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: Edition du profil {% endblock %}
+
+{% block titlebar_title %}Mon profil{% endblock %}
+{% block titlebar_ariane %}
+    {{ parent() }} <a href="{{ path('fos_user_profile_show') }}">Profil</a> / <span>Modifier</span>
+{% endblock %}
+
+{% block fos_user_content %}
+
+<div class="block_contact_us_type_1">
+    <div class="send_message">
+        <h4>Editer le profil</h4>
+        <p class="text_subtitle_1">Merci d'éditer votre profil si celui-ci demeure incomplet.</p>
+
+            {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+
+    </div>
+</div>
+{% endblock fos_user_content %}
+
+{% block right %}
+<div class="sidebar">
+    <div class="separator" style="height:37px;"></div>
+        <div class="block_categories">
+            <p>
+                <h6>Ou alors !</h6>
+                <ul class="list_5">
+                    <li><a href="{{ path('fos_user_change_password') }}">Modifier mot de passe</a></li>
+                    <li><a href="{{ path('fos_user_profile_show') }}">Voir mon profil</a></li>
+                    <li><a href="{{ path('fos_user_profile_edit') }}">Supprimer mon compte</a></li>
+                </ul>
+            </p>
+        </div>
+    <div class="clearboth"></div>
+</div>
+{% endblock %}

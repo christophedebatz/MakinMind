@@ -1,0 +1,34 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: Confidentialité {% endblock %}
+
+{% block titlebar_title %}Clause de confidentialité{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Clause de confidentialité</span>
+{% endblock %}
+
+{% block slider %}{% endblock %}
+{% block content_type %}{% endblock %}
+
+
+{% block content %}
+<h1>Clause de confidentialité</h1>
+<p>
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at turpis tortor, sollicitudin consequat turpis. Phasellus vitae sem mi. Vestibulum non nisi ligula, nec tristique nibh. Nunc pellentesque pretium dolor a iaculis. Donec condimentum ligula ut felis convallis dictum. Duis sem massa, viverra et consequat sed, imperdiet vel nisl. In at adipiscing lacus. Nunc id sodales lacus. Curabitur sed felis et arcu euismod pellentesque.<br/>
+
+	Vivamus in orci ante, et malesuada neque. Nulla est massa, consectetur at fringilla ac, condimentum non magna. Donec sit amet mauris in libero porttitor semper. Etiam imperdiet, leo a malesuada rhoncus, erat ipsum aliquam erat, non feugiat diam lacus molestie dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin non nulla et felis ultricies gravida. Ut tincidunt adipiscing augue, vitae bibendum nulla consequat non. Nulla facilisi. Phasellus varius, nulla et laoreet luctus, dolor quam aliquam eros, a varius mi leo sit amet nisi. Mauris cursus massa sit amet enim pellentesque nec egestas quam eleifend. Duis quis odio est. Nulla facilisi. Aliquam porta condimentum mauris, in lacinia quam molestie id.<br/>
+
+	Praesent iaculis neque nec velit pretium non commodo felis dictum. Nullam in molestie felis. Nam eleifend lobortis enim quis laoreet. Nulla consequat, massa at euismod imperdiet, lorem est ultrices neque, sit amet fermentum sem augue a nisi. Integer vestibulum accumsan pellentesque. Etiam diam ligula, fringilla vitae congue sed, mattis vitae risus. Quisque nec arcu quis lorem mattis cursus eu ornare tortor. Suspendisse non gravida diam. Sed tempus arcu nisi. Curabitur ac ante non risus dictum pellentesque.<br/>
+
+	Pellentesque nisi neque, feugiat non luctus at, vehicula ut odio. Maecenas vitae faucibus ante. Nunc mollis nibh et ipsum sollicitudin rutrum vehicula dui consectetur. Pellentesque vulputate nisi fringilla tortor feugiat dignissim. Donec non justo enim. Nulla ipsum enim, imperdiet quis laoreet eu, congue at sem. Cras sed est diam, eget scelerisque turpis. Aenean quis elit a diam accumsan pulvinar eget at urna. Curabitur eros risus, interdum et dapibus eleifend, condimentum semper dui. Nulla nec erat vitae felis hendrerit interdum. In hac habitasse platea dictumst. Mauris convallis posuere rhoncus.<br/>
+
+	Suspendisse ac ultrices nunc. Maecenas vulputate velit id leo dignissim aliquam. Aliquam feugiat, nisi a placerat vulputate, sapien leo varius massa, quis sollicitudin purus ante vitae metus. Vivamus a ante porta dui malesuada imperdiet id vitae felis. Sed tincidunt rhoncus dolor et semper. Suspendisse potenti. Ut accumsan lobortis arcu, ut euismod lectus porta at. Aenean condimentum metus nec sapien lobortis fringilla. Nunc sit amet ante et massa placerat rhoncus. Sed eget nisi a lorem ultrices imperdiet eu ac eros. Curabitur vel leo eget lacus sagittis tincidunt. In non libero non ligula viverra malesuada sit amet ac nunc.
+</p>
+
+<form method="post" action="{{ path('project_confidentiality', {'id': project.id, 'url': project.url }) }}">
+	<p>
+       <input type="checkbox" name="contract_accpt" id="contract_accpt" required="required"/> <label for="contract_accpt">J'atteste avoir pris connaissance la clause de condifentialité ci-dessus</label><br /><br/>
+       <input type="submit" value="valider"/>
+	</p>
+</form>
+{% endblock %}

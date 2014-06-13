@@ -1,0 +1,50 @@
+
+<div class="fos_user_user_show">
+
+	<div class="block_tabs_type_1">
+		<div class="tabs">
+			<ul>
+				<li><a href="#1" class="current">Général</a></li>
+				<li><a href="#3">Professionnel</a></li>
+			</ul>
+		</div>
+		
+		<div class="tab_content">
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				
+				<ul class="list_5">
+					<li>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }} : <strong>{{ user.username }}</strong></li>
+					<li>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }} : <strong>{{ user.email }}</strong></li>
+					<li>Noms : <strong>{{ user.firstname|title}} {{ user.lastname|upper }}</strong></li>
+				</ul>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+
+		<div class="tab_content">
+			<div class="oh" style="padding-top:1px; width: 450px;">
+
+					<ul class="list_5">
+						<li>Intitulé du poste actuel : <strong>{{ user.job }}</strong></li>
+						<li>Entreprise actuelle : <strong>{{ user.company|upper }}</strong></li>
+						{% if user.workSocialURL is not null %}
+							<li>CV en ligne : <strong><a href="{{ user.workSocialURL }}">{{ user.workSocialURL }}</a></strong></li>
+						{% endif %}
+						{% if user.facebookURL is not null %}
+							<li>Profil Facebook : <strong><a href="{{ user.facebookURL }}">{{ user.facebookURL }}</a></strong></li>
+						{% endif %}
+						{% if user.twitterURL is not null %}
+							<li>Profil Twitter : <strong><a href="{{ user.twitterURL }}">{{ user.twitterURL }}</a></strong></li>
+						{% endif %}
+					</ul>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$('.block_tabs_type_1 .tabs').tabs('.block_tabs_type_1 .tab_content', {
+			initialIndex : 0
+		});
+	</script>
+
+</div>

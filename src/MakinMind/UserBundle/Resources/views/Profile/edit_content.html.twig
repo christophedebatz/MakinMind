@@ -1,0 +1,126 @@
+{% form_theme form theme %}
+{{ form_errors(form) }}
+
+<div class="form">
+	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+
+	<div class="block_tabs_type_1">
+		<div class="tabs">
+			<ul>
+				<li><a href="#1" class="current">Général</a></li>
+				<li><a href="#2">Personnel</a></li>
+				<li><a href="#3">Professionnel</a></li>
+			</ul>
+		</div>
+		
+		<div class="tab_content">
+			<div style="text-align: center;margin: auto;float: right; width: 150px;">
+				<h6>Ma photo</h6>
+       			<a href="#">
+       				<img src="{{ asset('skydream/images/team3.jpg') }}" alt="Photo de {{ app.user.username }}" style="border: 1px solid #CCCCCC; padding: 2px;" />
+       			</a>
+        	</div>
+
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				<h4 class="fw_n">Informations générales</h4>
+				
+				{{ form_errors(form.user.username) }}
+				    <p class="label">{{ form_label(form.user.username, { 'attr': {'class': 'req'} }) }} <span>(requis)</span></p>
+				 	<div class="field">{{ form_widget(form.user.username) }}</div>
+
+				{{ form_errors(form.user.email) }}
+				    <p class="label">{{ form_label(form.user.email, { 'attr': {'class': 'req'} }) }} <span>(requis)</span></p>
+				 	<div class="field">{{ form_widget(form.user.email) }}</div>
+
+				{{ form_errors(form.user.firstname) }}
+				    <p class="label">{{ form_label(form.user.firstname, { 'attr': {'class': 'req'} }) }} <span>(requis)</span></p>
+				    <div class="field">{{ form_widget(form.user.firstname) }}</div>
+
+				{{ form_errors(form.user.lastname) }}
+				    <p class="label">{{ form_label(form.user.lastname, { 'attr': {'class': 'req'} }) }} <span>(requis)</span></p>
+				 	<div class="field">{{ form_widget(form.user.lastname) }}</div>
+
+				{{ form_errors(form.user.birthdate) }}
+				    <p class="label">{{ form_label(form.user.birthdate) }}</p>
+				    <div class="field">{{ form_widget(form.user.birthdate) }}</div>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+
+
+		<div class="tab_content">
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				<h4 class="fw_n">Informations personnelles</h4>
+
+				{{ form_errors(form.user.phone) }}
+				    <p class="label">{{ form_label(form.user.phone) }}</p>
+				    <div class="field">{{ form_widget(form.user.phone) }}</div>
+
+				{{ form_errors(form.user.address) }}
+				    <p class="label">{{ form_label(form.user.address) }}</p>
+				    <div class="field">{{ form_widget(form.user.address) }}</div>
+
+				{{ form_errors(form.user.city) }}
+				    <p class="label">{{ form_label(form.user.city) }}</p>
+				 	<div class="field">{{ form_widget(form.user.city) }}</div>
+
+				{{ form_errors(form.user.zipcode) }}
+				    <p class="label">{{ form_label(form.user.zipcode) }}</p>
+				    <div class="field">{{ form_widget(form.user.zipcode) }}</div>
+
+				{{ form_errors(form.user.country) }}
+				    <p class="label">{{ form_label(form.user.country) }}</p>
+				    <div class="label">{{ form_widget(form.user.country) }}</div>
+			</div>
+		</div>
+
+		<div class="tab_content">
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				<h4 class="fw_n">Informations professionnelles</h4>
+
+					{{ form_errors(form.user.job) }}
+					    <p class="label">{{ form_label(form.user.job) }}</p>
+					    <div class="field">{{ form_widget(form.user.job) }}</div>
+
+					{{ form_errors(form.user.company) }}
+					    <p class="label">{{ form_label(form.user.company) }}</p>
+					    <div class="field">{{ form_widget(form.user.company) }}</div>
+
+					{{ form_errors(form.user.workSocialURL) }}
+					    <p class="label">{{ form_label(form.user.workSocialURL) }}</p>
+					    <div class="field">{{ form_widget(form.user.workSocialURL) }}</div>
+
+					{{ form_errors(form.user.facebookURL) }}
+					    <p class="label">{{ form_label(form.user.facebookURL) }}</p>
+					    <div class="field">{{ form_widget(form.user.facebookURL) }}</div>
+
+					{{ form_errors(form.user.twitterURL) }}
+					    <p class="label">{{ form_label(form.user.twitterURL) }}</p>
+					    <div class="field">{{ form_widget(form.user.twitterURL) }}</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$('.block_tabs_type_1 .tabs').tabs('.block_tabs_type_1 .tab_content', {
+			initialIndex : 0
+		});
+	</script>
+
+	<div style="padding-top: 15px;width: 450px;">
+		<h4 class="fw_n">Validation</h4>
+
+		{{ form_errors(form.current) }}
+			<p class="label">Mot de passe :</p>
+			<div class="field">{{ form_widget(form.current) }}</div>
+			<div class="separator" style="height:20px;"></div>
+	</div>
+
+	{{ form_rest(form) }}
+
+    <div class="button">
+		<input type="submit" class="general_button" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}">
+	</div>
+
+	</form>
+</div>

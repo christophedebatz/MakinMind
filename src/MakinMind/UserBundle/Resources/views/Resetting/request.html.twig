@@ -1,0 +1,25 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} :: Identitfiants perdus {% endblock %}
+
+{% block titlebar_title %}Identitiants perdus{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Identitfiants perdus</span>
+{% endblock %}
+
+{% block content_type %}{% endblock %}
+
+{% block fos_user_content %}
+
+<div class="block_contact_us_type_1">
+	<div class="send_message">
+		<h4>Je retrouve mes identifiants</h4>
+		<p class="text_subtitle_1">Merci de remplir le formulaire pour récupérer de nouveaux identifiants.</p>
+
+		{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+
+	</div>
+</div>
+
+
+{% endblock fos_user_content %}

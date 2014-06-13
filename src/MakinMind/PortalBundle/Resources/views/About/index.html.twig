@@ -1,0 +1,96 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Notre équipe{% endblock %}
+{% block titlebar_title %}Qui sommes-nous ?{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Qui sommes-nous ?</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{% endblock%}
+
+{% block content %}
+
+<div class="block_our_team">
+	<h3 class="heading_w_icon">L'équipe MakinMind.com</h3>
+	<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+	<p class="text_2">L'équipe de MakinMind est composée de huit étudiants de quatrième année à l'EFREI (Ecole d'Ingénieur des NTIC). Nous avons chacun des connaissances particulières dans un domaine précis ce qui nous permet de disposer d'une palette de qualifications plus que suffisante pour manager cette plateforme !</p>
+
+	<div class="separator" style="height:20px;"></div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-benjamin.jpg') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Benjamin<br />BERTRAND</h6>
+		<span class="position">Chef de projet</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-christophedb.png') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Christophe<br />DE BATZ</h6>
+		<span class="position">Resp. Technique</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-ragulan.jpg') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Ragulan<br />CHARLES</h6>
+		<span class="position">Co-resp. Technique</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-clemence.jpg') }}" alt="" />
+			</div>
+		<h6 align="center">Clémence<br />RENAULT</h6>
+		<span class="position">Resp. Juridique</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-christophe.jpg') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Christophe VERCLYTTE</h6>
+		<span class="position">Analyste / Développeur</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-julien.jpg') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Julien BLANC</h6>
+		<span class="position">Resp. Commercial</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-houssem.jpg') }}" alt="" /></a></div>
+		<h6 align="center">Houssem<br />EDDINE GRANDI</h6>
+		<span class="position">Développeur</span>
+	</div>
+
+	<div class="teammate">
+		<div class="photo" align="center">
+			<img src="{{ asset('uploads/team-ahmed.png') }}" style="width: 120px; height: 160px;" alt="">
+		</div>
+		<h6 align="center">Ahmed<br />EL RHAZI</h6>
+		<span class="position">Resp. Qualité</span>
+	</div>
+
+	<div class="separator" style="height:30px;"></div>
+	<h3 class="heading_w_icon">Nos partenaires</h3>
+	<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+	<a href="#" onclick="window.open('http://labs.debatz.fr');">
+		<img src="{{ asset('uploads/logolabs.png') }}" alt="Labs de Batz" style="margin: 20px;">
+	</a>
+
+	<a href="#" onclick="window.open('http://efrei.fr');">
+		<img src="{{ asset('uploads/logoefrei.png') }}" alt="EFREI Paris" style="margin: 20px;">
+	</a>
+</div>
+
+{% endblock %}

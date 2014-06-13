@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>{% block title %}MakinMind{% endblock %}</title>
+
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="layout/plugins/html5.js"></script>
+<![endif]-->
+
+{% block resources %}
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,800,800italic" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{{ asset('skydream/layout/style.css') }}" type="text/css">
+<link rel="stylesheet" href="{{ asset('skydream/layout/plugins/prettyphoto/css/prettyPhoto.css') }}" type="text/css">
+
+<script type="text/javascript" src="{{ asset('skydream/layout/js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('skydream/layout/plugins/prettyphoto/jquery.prettyPhoto.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('skydream/layout/plugins/tools/jquery.tools.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('skydream/layout/plugins/scrollto/jquery.scroll.to.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('skydream/layout/plugins/ajaxform/jquery.form.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('skydream/layout/js/main.js') }}"></script>
+{% endblock %}
+
+{% block resources_slider %}
+{% endblock %}
+
+
+</head>
+
+<body class="theme_color_green"{% block jsBodyTag %}{% endblock %}>
+    <div class="wrapper sticky_footer">
+
+        <header>
+            <div id="header">
+
+                <section class="section_top section_slider_1" style="height: 25px; text-align: right;">
+                    <nav class="inner">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.session is not empty %}
+                            <a href="{{ path('fos_user_profile_edit') }}" class="general_button small"><span>{{ app.user.username }}</span></a>  
+                            <a href="{{ path('fos_user_security_logout') }}" class="general_button small type_3"><span>Quitter</span></a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}" class="general_button small"><span>Se connecter</span></a>  
+                            <a href="{{ path('fos_user_registration_register') }}" class="general_button small"><span>S'inscrire</span></a>
+                        {% endif %}
+
+                    </nav>
+                </section>
+
+                <section class="section_top">
+                    <div class="inner">
+                        <div id="logo"><a href="{{ path('portal_home') }}"><img src="{{ asset('skydream/images/logo1.png') }}" alt="MakinMind" title="MakinMind"></a></div>
+                        
+                        <nav class="main_menu">
+                            <ul>
+                                <li><a href="index.html">LE PRINCIPE<span class="subtext">comment ça marche ?</span></a>
+                                    
+                                    <ul>
+                                        <li><a href="index_2.html">Vous avez un projet</a></li>
+                                        <li><a href="index_3.html">Vous avez des compétences</a></li>
+                                    </ul>
+                                </li>
+                                <li{% block projects %}{% endblock %}><a href="{{ path('projects') }}">LES PROJETS<span class="subtext">les projets en cours</span></a>
+                                    
+                                    <ul>
+                                        <li><a href="{{ path('projects') }}">Voir les projets</a>
+                                        <li><a href="portfolio_1_1_c.html">Par thème...</a>
+                                            
+                                            <ul>
+                                                <li><a href="portfolio_1_1_c.html">Développement web</a></li>
+                                                <li><a href="portfolio_1_2_c.html">Développement logiciel</a></li>
+                                                <li><a href="portfolio_1_3_c.html">Recherche scientifique</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="portfolio_3_4_c.html">Recherche avancée</a>
+                                    </ul>
+                                </li>
+                                <li><a href="#">ENTREPRENEURS<span class="subtext">vous avez un projet ?</span></a>
+                                    
+                                    <ul>
+                                        <li><a href="{{ path('project_createProject') }}">Créer un nouveau projet...</a>
+                                            
+                                                <ul>
+                                                <li><a href="portfolio_1_1_c.html">Développement web</a></li>
+                                                <li><a href="portfolio_1_2_c.html">Développement logiciel</a></li>
+                                                <li><a href="portfolio_1_3_c.html">Recherche scientifique</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">Outils de conception</a></li>
+                                        <li><a href="#">Outils de protection</a></li>
+                                        <li><a href="#">Outils de création</a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li><a href="blog.html">COLLABORATEURS<span class="subtext">vous avez des compétences ?</span></a>
+                                    
+                                    <ul>
+                                        <li><a href="blog.html">Rejoindre un projet...</a>
+                                        <ul>
+                                                <li><a href="portfolio_1_1_c.html">Développement web</a></li>
+                                                <li><a href="portfolio_1_2_c.html">Développement logiciel</a></li>
+                                                <li><a href="portfolio_1_3_c.html">Recherche scientifique</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="blog_post.html">Compétences</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">A PROPOS<span class="subtext">qui sommes nous ?</span></a>
+                                    <ul>
+                                        <li><a href="{{ path('about_us') }}">Qui sommes-nous ?</a></li>
+                                        <li><a href="blog_post.html">Contact</a></li>
+                                        <li><a href="blog_post.html">Conditions générales</a></li>
+                                        <li><a href="portfolio_1_2_c.html">Mentions légales</a></li>
+                                        <li><a href="portfolio_1_3_c.html">Respect de la vie privée</a></li>
+                                            
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        
+                        <div class="clearboth"></div>
+                    </div>
+                </section>
+
+                {% block titlebar %}
+                <section class="section_title">
+                    <div class="inner">
+                        <div class="block_title"><h1>{% block titlebar_title %}Mon titre{% endblock %}</h1></div>
+                        
+                        <div class="block_breadcrumbs">
+                            <p>
+                                {% block titlebar_ariane %}
+                                    <a href="{{ path('portal_home') }}">Index</a> / 
+                                {% endblock %}
+                            </p>
+                        </div>
+                        
+                        <div class="clearboth"></div>
+                    </div>
+                </section>
+                <div class="line_3"></div>
+                
+                {% endblock %}
+                
+                {% block slider %}
+                <section class="section_slider_1">
+                    <div class="slider_line_1"></div>
+                    <div class="slider_line_2"></div>
+                    
+                    <div id="slider" class="slider">
+                        <div class="oneByOne_item">
+                            <img src="{{ asset('skydream/images/pic_slider_1_1_1.png') }}" alt="" class="pic_1_1" data-ease-type="bounceInRight">
+
+                            <img src="{{ asset('skydream/images/pic_slider_1_1_2.png') }}" alt="" class="pic_1_2" data-ease-type="bounceInRight">
+                            <img src="{{ asset('skydream/images/pic_slider_1_1_3.png') }}" alt="" class="pic_1_3" data-ease-type="bounceInRight">
+                            <div class="text_1_1" data-ease-type="fadeInUp">MakinMind.com</div>
+                            <div class="text_1_2" data-ease-type="fadeInUp">le projet, autrement</div>
+                            <div class="text_1_3" data-ease-type="fadeInUp">MakinMind vous protège, vous assiste, et vous permet de réussir vos projets aux côtés de passionnés voulant s'investir.</div>
+                        </div>
+                        
+                        <div class="oneByOne_item">
+                            <img src="{{ asset('skydream/images/pic_slider_1_2_1.png') }}" alt="" class="pic_2_1" data-ease-type="fadeInRight">
+                            <img src="{{ asset('skydream/images/pic_slider_1_2_2.png') }}" alt="" class="pic_2_2" data-ease-type="fadeInRight">
+                            <div class="text_2_1" data-ease-type="fadeIn">Entourez-vous de passionnés</div>
+                            <div class="text_2_2" data-ease-type="fadeIn">Développez avec eux en toute sécurité</div>
+                            <div class="text_2_3" data-ease-type="fadeIn">Nous nous chargeons de protéger votre idée tout en vous permettant de menez à bien votre projet sans aucune crainte !</div>
+                            <div class="text_2_4" data-ease-type="fadeIn"><a href="#" class="general_button big arrow_right"><span>En savoir plus</span></a></div>
+                        </div>
+                        
+                        <div class="oneByOne_item">
+                            <img src="{{ asset('skydream/images/pic_slider_1_3_1.png') }}" alt="" class="pic_3_1" data-ease-type="bounceInDown">
+                            <img src="{{ asset('skydream/images/pic_slider_1_3_2.png') }}" alt="" class="pic_3_2" data-ease-type="bounceInDown">
+                            <img src="{{ asset('skydream/images/pic_slider_1_3_3.png') }}" alt="" class="pic_3_3" data-ease-type="bounceInDown">
+                            <div class="text_3_1" data-ease-type="fadeInLeft">Trois thèmes</div>
+                            <div class="text_3_2" data-ease-type="fadeInLeft">pour vos projets</div>
+                            <div class="text_3_3" data-ease-type="fadeInLeft">Classez votre projet dans une catégorie</div>
+                            <div class="text_3_4" data-ease-type="fadeInLeft">Les travailleurs pourront alors y avoir accès plus rapidement et votre idée aura alors davantage de chance d'intéresser.</div>
+                            <div class="text_3_5" data-ease-type="fadeInLeft"><a href="#" class="general_button big arrow_right"><span>En savoir plus</span></a></div>
+                        </div>
+                        
+                        <div class="oneByOne_item">
+                            <div class="video_4_1" data-ease-type="fadeIn"><iframe src="http://player.vimeo.com/video/36778012?badge=0" width="512" height="288" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>
+                            <div class="text_4_1" data-ease-type="fadeInLeft">MakinMind <b>répond</b> à toutes</div>
+                            <div class="text_4_2" data-ease-type="fadeInLeft">vos <b>questions</b> en vidéo</div>
+                            <div class="text_4_3" data-ease-type="fadeInLeft">Présentation des services disponibles</div>
+                            <div class="text_4_4" data-ease-type="fadeInLeft">pourquoi utiliser MakinMind ? Quels gains pour votre projet ? Quels outils sont proposés ? Comment suis-je rémunéré ?</div>
+                            <div class="text_4_5" data-ease-type="fadeInLeft"><a href="#" class="general_button big arrow_right"><span>En savoir plus</span></a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="static_pic"><img src="{{ asset('skydream/images/pic_slider_1_static.jpg') }}" alt=""></div>
+                    
+                    <script type="text/javascript">
+                        $(function() {
+                            $('#slider').oneByOne({
+                                width : 2000,
+                                className : 'oneByOne1',                 
+                                easeType : 'bounceInRight',
+                                slideShow : false,
+                                showArrow : true,
+                                showButton : false
+                            });
+                        });
+                    </script>
+                </section>
+                {% endblock %}
+
+            </div>
+        </header>
+        
+        <div id="content"{% block content_type %} class="right_sidebar"{% endblock %}>
+            <div class="inner">
+                <div class="general_content">
+                    <div class="main_content">
+                        <div class="separator" style="height:35px;"></div>
+                        {% block content %}
+                
+                        {% endblock %}
+                        </div>
+                        {% block right %}
+
+                        {% endblock %}
+                    <div class="clearboth"></div>
+                </div>
+            </div>
+        </div>
+
+        {% block footer %}
+        <footer>
+            <div id="footer">
+                <section class="section_top">
+                    <div class="inner">
+                        <div class="block_to_top">
+                            <a href="#">RETOUR EN HAUT</a>                     
+                        </div>
+                        
+                        <div class="block_footer_widgets">
+                            <div class="column">
+                                <h3>A propos</h3>
+                                
+                                <div class="block_footer_about">
+                                    <p>Equipe MakinMind France.</p>
+                                    <p>&nbsp;</p>
+                                    <p>Adresse: 46, rue Saint Charles, 78000 Versailles, France</p>
+                                    <p>Téléphone: +33 687757602</p>
+                                    <p>Email: infos@makinmind.com</p>
+                                </div>
+                                
+                                <div class="block_footer_social_1">
+                                    <ul>
+                                        <li><a href="#" class="twitter">Twitter</a></li>
+                                        <li><a href="#" class="facebook">Facebook</a></li>
+                                        <li><a href="#" class="pinterest">Pinterest</a></li>
+                                        <li><a href="#" class="vimeo">Vimeo</a></li>
+                                        <li><a href="#" class="rss">RSS</a></li>
+                                        <li><a href="#" class="flickr">Flickr</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        
+                            {% render "MakinMindPortalBundle:Default:lastProjects" %}
+                            
+                            <div class="column">
+                                <h3>Latest Tweets</h3>
+                                
+                                <div class="block_footer_tweets">
+                                   
+                                </div>
+                            </div>
+                     
+                            
+                            <div class="clearboth"></div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="section_bottom">
+                    <div class="inner">
+                        <div class="block_bottom_menu">
+                            <ul>
+                                <li><a href="#">Plan du site</a></li>
+                                <li><a href="#">Conditions</a></li>
+                                <li><a href="#">Confidentialité</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="block_copyrights"><p>Copyright &copy; 2013 MakinMind Corporation. All rights reserved.</p></div>
+                        
+                        <div class="clearboth"></div>
+                    </div>
+                </section>
+            </div>
+        </footer>
+        
+        {% endblock%}
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+{
+  "require": {
+    "twig/extensions": "dev-master",
+    "friendsofsymfony/user-bundle": "v1.2.4"
+  }
+}

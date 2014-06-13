@@ -1,0 +1,52 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Candidats choisis{% endblock %}
+{% block titlebar_title %}Candidats choisis{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <span>Candidats choisis</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{{parent()}}{% endblock%}
+
+
+
+{% block content %}
+	{% for contract in contracts %}
+		{% if loop.index is odd %}
+		<div class="one_half">
+		{% else %}
+		<div class="one_half last">
+		{% endif %}
+			<div class="block_testimonials_1">
+				{% if contract.worker.picture is not null %}
+					<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{contract.worker.picture.url}}.{{contract.worker.picture.extension}}" alt="user avatar"></a></div>
+				{% else %}
+					<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{ asset('uploads/unknown.gif') }}" alt="user unknown avatar"></a></div>
+				{% endif %}
+				<div class="content">
+					<div class="text">
+						<p>Travaille chez {{contract.worker.company}}</p>
+						<p>Date de votre signature : {{contract.creaDate|date("d/m/y")}}</p>
+						<p>Salaire proposé : {{contract.amount}} euros</p>
+						<div class="tail"></div>
+					</div>
+					<div class="author"><p><a href="#">{{contract.worker.firstName}} {{contract.worker.lastName}} </a> <span class="position">{{contract.worker.job}}</span></p></div>
+				</div>
+				<div class="clearboth"></div>
+			</div>
+		</div>
+
+		{% if loop.index is even%}
+		<div class="clearboth"></div>
+		<div class="separator" style="height:34px;"></div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+		{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project' : project} %}
+	<div class="separator" style="height:40px;"></div>
+</div>
+{% endblock %}
+

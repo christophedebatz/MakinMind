@@ -1,0 +1,72 @@
+show_project:
+    pattern: /project/{id}-{url}
+    defaults: {_controller: MakinMindProjectBundle:Project:showProject}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_confidentiality:
+    pattern: /project/{id}-{url}/confidentiality
+    defaults: {_controller: MakinMindProjectBundle:Project:confidentiality}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_contract:
+    pattern: /project/{id}-{url}/contract
+    defaults: {_controller: MakinMindProjectBundle:Project:contract}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+projects:
+    pattern: /projects
+    defaults: {_controller: MakinMindProjectBundle:Project:projectsList}
+
+my_projects:
+    pattern: /my-projects
+    defaults: {_controller: MakinMindProjectBundle:Project:myProjectsList}
+
+project_list_developpers:
+    pattern: /project/{id}-{url}/collaborators
+    defaults: {_controller: MakinMindProjectBundle:Project:projectDevelopersList}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_retained_candidates:
+    pattern: /project/{id}-{url}/candidates/retained
+    defaults: {_controller: MakinMindProjectBundle:Project:projectRetainedCandidatesList}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_candidates:
+    pattern: /{id}-{url}/candidates
+    defaults: {_controller: MakinMindProjectBundle:Project:projectCandidatesList}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_modifyResume:
+    pattern: /{id}/modifyResume
+    defaults: {_controller: MakinMindProjectBundle:Project:projectModifyResume}
+    requirements:
+        id: \d+
+
+project_modifyApplyTerms:
+    pattern: /{id}/modifyApplyTerms
+    defaults: {_controller: MakinMindProjectBundle:Project:projectModifyApplyTerms}
+    requirements:
+        id: \d+
+
+project_status:
+    pattern: /{id}-{url}/status
+    defaults: {_controller: MakinMindProjectBundle:Project:projectStatus}
+    requirements:
+        id: \d+
+        url: "[a-zA-Z0-9-]+"
+
+project_createProject:
+    pattern: /project/create
+    defaults: {_controller: MakinMindProjectBundle:Project:createProject}

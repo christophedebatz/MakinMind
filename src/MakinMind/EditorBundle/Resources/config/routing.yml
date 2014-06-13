@@ -1,0 +1,41 @@
+EditorBundle_editorTree:
+    pattern:  /editorTree/{id}
+    defaults: { _controller: MakinMindEditorBundle:Editor:treeManager }
+    requirements:
+        id: \d+
+
+EditorBundle_editor:
+    pattern:  /editor/{id}
+    defaults: { _controller: MakinMindEditorBundle:Editor:editor }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+EditorBundle_structManage:
+    pattern: /structManager/{id}
+    defaults: {_controller: MakinMindEditorBundle:Editor:manageStructure}
+    options:
+        expose: true
+    requirements:
+        id: \d+
+
+EditorBundle_modifyFile:
+    pattern: /modifyFile/{id}/{file}
+    defaults: {_controller: MakinMindEditorBundle:Editor:modifyFile}
+    options:
+        expose: true
+    requirements:
+        id: \d+
+
+EditorBundle_checkFileOwner:
+    pattern: /checkFileOwner/{fileParent}/{file}
+    defaults: {_controller: MakinMindEditorBundle:Editor:checkFileOwner}
+    options:
+        expose: true
+
+EditorBundle_changeFilePrivileges:
+    pattern: /changePrivileges/{id}
+    defaults: {_controller: MakinMindEditorBundle:Editor:changePrivileges}
+    options:
+        expose: true

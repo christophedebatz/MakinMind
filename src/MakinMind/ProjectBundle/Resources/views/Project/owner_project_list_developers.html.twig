@@ -1,0 +1,159 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: vos collaborateurs{% endblock %}
+{% block titlebar_title %}Collaborateurs{% endblock %}
+{% block titlebar_ariane %}
+	{{parent()}} 
+	<a href="{{ path('my_projects') }}">Projets</a> / 
+	<a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">{{project.name|title}}</a> / <span>Collaborateurs</span>
+{% endblock %}
+{% block slider %}{% endblock %}
+{% block content_type %}{{parent()}}{% endblock%}
+
+
+{% block content %}
+
+	<h3 class="heading_w_icon">Vos {{ contracts|length }} collaborateurs</h3>
+	<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+	{% for contract in contracts %}
+	{% if loop.index is odd %}
+		<div class="one_half">
+	{% else %}
+		<div class="one_half last">
+	{% endif %}
+		<div class="block_testimonials_1">
+			{% if contract.worker.picture is not null %}
+				<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{contract.worker.picture.url}}.{{contract.worker.picture.extension}}" alt="user avatar"></a></div>
+			{% else %}
+				<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{ asset('uploads/unknown.gif') }}" alt="user unknown avatar"></a></div>
+			{% endif %}
+				<div class="content">
+					<div class="text">
+						{% if contract.worker.company is not null %}
+							<p>Travaille chez {{contract.worker.company | upper}}</p>
+						{% else %}
+							<p>Employeur non connu.</p>
+						{% endif %}
+						<p>Date de votre signature {{contract.creaDate|date("d/m/y")}}</p>
+						<p>Date de sa signature {{contract.signDate|date("d/m/y")}}</p>
+						<div class="tail"></div>
+					</div>
+					
+					<div class="author"><p><a href="#">{{contract.worker.firstName}} {{contract.worker.lastName}} </a>&nbsp;&nbsp; <span class="position">{{contract.worker.job}}</span></p></div>
+				</div>
+				<div class="clearboth"></div>
+			</div>
+		</div>
+
+		{% if loop.index is even %}
+			<div class="clearboth"></div>
+			<div class="separator" style="height:34px;"></div>
+		{% endif %}
+	{% endfor %}
+
+
+	<div class="separator" style="height:45px;"></div>
+
+	<h3 class="heading_w_icon">Chef de projet</h3>
+	<div class="line_1" style="margin:0px 0px 19px;"></div>
+
+	{% if projectChief is null %}
+		<div class="general_info_box warning">
+			<p>Vous n'avez aucun chef de project actuellement, il est important de nommer un chef de projet !</p>
+		</div>
+		<div class="separator" style="height:35px;"></div>
+
+	{% else %}
+
+		<div class="one_half last">
+			<div class="block_testimonials_1">
+				{% if projectChief.worker.picture is not null %}
+					<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{ projectChief.worker.picture.url}}.{{projectChief.worker.picture.extension}}" alt="user avatar"></a></div>
+				{% else %}
+					<div class="avatar"><a href="#"><img style="width:45px; height:45px;" src="{{ asset('uploads/unknown.gif') }}" alt="user unknown avatar"></a></div>
+				{% endif %}
+					<div class="content">
+						<div class="text">
+							{% if projectChief.worker.company is not null %}
+								<p style="font-weight: bold;">Travaille chez {{projectChief.worker.company | upper}}</p>
+							{% else %}
+								<p style="font-weight: bold;">Employeur non connu.</p>
+							{% endif %}
+							<p>Date de votre signature {{projectChief.creaDate|date("d/m/y")}}</p>
+							<p>Date de sa signature {{projectChief.signDate|date("d/m/y")}}</p>
+							<div class="tail"></div>
+						</div>
+							
+						<div class="author"><p><a href="#">{{projectChief.worker.firstName}} {{projectChief.worker.lastName}} </a>&nbsp;&nbsp; <span class="position">{{projectChief.worker.job}}</span></p></div>
+					</div>
+					<div class="clearboth"></div>
+				</div>
+			</div>
+			
+			<div class="separator" style="height:35px;"></div>
+			<div class="line_1" style="margin:0px 0px 19px;"></div>
+	{% endif %}
+
+
+	
+	
+
+	<form method="post" action="{{ path('project_list_developpers', {'id': project.id, 'url': project.url}) }}">
+		<div class="oh">
+			<div class="block_contact_us_type_1">
+		    	<div class="send_message">
+					<div class="form" style="width: 75%;">
+		
+						<p class="label">
+							Nommer un nouveau chef de projet : 
+						</p>
+
+						<div class="field" style="border: none;">
+							<select name="projectChief" onchange="if (this.value != -1) this.form.submit();">
+								<optgroup label="Général">
+									<option value="-1" selected="selected"></option>
+									{% if projectChief is not null %}
+										<option value="-2">Destituer {{ projectChief.worker.firstName|title ~ " " ~ projectChief.worker.lastName|upper }}</option>
+									{% endif %}
+								</optgroup>
+
+								<optgroup label="Collaborateurs">
+								{% for contract in contracts %}
+
+									{% if projectChief is not null %}
+										{% if contract.id != projectChief.id %}
+											
+											<option value="{{ contract.id }}">
+												{{ contract.worker.firstName|title ~ " " ~ contract.worker.lastName|upper }}
+											</option>
+
+										{% endif %}
+										{% else %}
+
+											<option value="{{ contract.id }}">
+												{{ contract.worker.firstName|title ~ " " ~ contract.worker.lastName|upper }}
+											</option>
+
+									{% endif %}
+
+								{% endfor %}
+								</optgroup>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+{% endblock %}
+
+{% block right %}
+<div class="sidebar">
+	<div class="separator" style="height:37px;"></div>
+		{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project' : project} %}
+	<div class="separator" style="height:40px;"></div>
+</div>
+{% endblock %}
+

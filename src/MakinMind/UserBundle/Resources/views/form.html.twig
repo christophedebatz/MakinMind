@@ -1,0 +1,17 @@
+{% block form_errors %}
+	{% spaceless %}
+		{% if errors|length > 0 %}
+			<div class="general_info_box error demo"><a href="#" class="close">Fermer</a>
+				{% for error in errors %}
+					<p>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+	{% endspaceless %}
+{% endblock form_errors %}
+
+{% block field_label %}
+	{% spaceless %}
+	    <label for="{{ id }}">{{ id|trans([], 'FOSUserBundle') }}</label>
+	{% endspaceless %}
+{% endblock field_label %}

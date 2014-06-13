@@ -1,0 +1,18 @@
+<div class="column">
+    <h3>Derniers projets</h3>
+    
+    <div class="block_footer_recent_posts">
+        {% if lastProjects is not null %}
+		<ul>
+		    {% for project in lastProjects %}
+
+		        <li><a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">{{ project.name|title }}</a></li>
+
+		    {% endfor %}
+		</ul>
+
+	{% else %}
+   	 	Aucun project pour le moment...
+	{% endif %}
+    </div>
+</div>

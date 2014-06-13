@@ -1,0 +1,403 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Projet {{project.name|title}}{% endblock %}
+{% block titlebar_title %}{{project.name|title}}{% endblock %}
+{% block titlebar_ariane %}
+	{{ parent() }} <a href="{{ path('projects') }}">Projets</a> / <span>{{project.name|title}}</span>
+{% endblock %}
+
+{% block slider %}{% endblock %}
+{% block content_type %}{{ parent() }}{% endblock %}
+
+{% block resources %}
+	{{parent()}} 
+	<script type="text/javascript" src="{{ asset('skydream/bootstrap/js/bootstrap.min.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('skydream/bootstrap/css/bootstrap.min.css') }}" type="text/css">
+
+	<style type="text/css">
+	.modal.large{
+	    width: 750px;
+	    margin-left: -390px;
+	}
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="block_blog_post_type_2">
+	<article>
+		<div class="content">
+
+			<div class="f_pic">
+				<img src="{{ asset('uploads/unknown_project.jpg') }}" alt="{{ project.name|title }}">
+			</div>
+
+			<div class="separator" style="height:20px;"></div>
+
+			<div class="block_tabs_type_3">
+				<div class="tabs">
+					<ul>
+						<li><a href="#1" class="current">Informations générales</a></li>
+						<li><a href="#2">Candidater au projet</a></li>
+						<li><a href="#3">A propos...</a></li>
+					</ul>
+				</div>
+				
+				<div class="tab_content">
+
+					<div id="modalChangeProject" class="modal large hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-header">
+					    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					    	<h3 id="myModalLabel">Informations générales</h3>
+					  	</div>
+					 	<div class="modal-body">
+							<form method="post" {{ form_enctype(formProject) }} id="projectForm">
+						    	<div class="block_contact_us_type_1">
+						    		<div class="send_message">
+						    			<div class="form">
+
+								   			{{ form_errors(formProject) }}
+
+								   			<p align="center" hidden="true">
+								   				<img src="{{asset('skydream/layout/images/ajax-loader.gif')}}" alt="loading"/>
+								   			</p>
+
+							   			 	<p class="label">
+							   			 		{{ form_label(formProject.shortDescription, "Résumé") }}
+							   			 	</p>
+
+							   			 	<div class="textarea">
+												{{ form_widget(formProject.shortDescription) }}
+							   			 	</div>
+
+							   			 	<p class="label">
+							   			 		{{ form_label(formProject.longDescription, "Déscription") }}
+							   			 	</p>
+
+											<div class="textarea">
+												{{ form_widget(formProject.longDescription) }}
+											</div>
+
+							   				{{ form_rest(formProject) }}
+							   			</div>
+						   			</div>
+						   		</div>
+
+						   		<div class="modal-footer">
+						   			<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+						   			<input type="submit" class="btn btn-primary" />	
+						   		</div>
+						   	</form>
+						</div>
+					</div>
+					 
+					<div class="oh" style="padding-top:1px;">
+						<h3 class="heading_w_icon">Résumé</h3>
+						<blockquote id="twigShortDescription" class="full" style="text-align: justify;">
+							{{project.shortDescription|title}}
+						</blockquote>
+
+						<p>&nbsp;</p>
+
+						<h3 class="heading_w_icon">Description</h3>
+						<blockquote id="twigLongDescription" class="full" style="text-align: justify;">
+							{{project.longDescription|title}}
+						</blockquote>
+
+						{% if app.user == project.owner %}
+							<a href="#modalChangeProject" role="button" data-toggle="modal" class="general_button small"><span>Modifier</span></a>
+						{% endif %}
+					</div>
+				</div>
+
+
+				<div class="tab_content">
+
+					<div id="modalChangeApplyTerms" class="modal large hide fade" tabindex="-1" role="dialog" aria-labelledby="modalChangeApplyTermsLabel" aria-hidden="true">
+					  	<div class="modal-header">
+					    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					   		<h3 id="modalChangeApplyTermsLabel">Candidature au projet</h3>
+					 	</div>
+				 	 	<div class="modal-body">
+						    <form method="post" {{ form_enctype(formApplyTerms) }} id="ApplyTermsForm">
+						    	<div class="block_contact_us_type_1">
+						    		<div class="send_message">
+						    			<div class="form">
+					   			 
+							   				{{ form_errors(formApplyTerms) }}
+
+							   				<p align="center" hidden="true">
+							   					<img src="{{asset('skydream/layout/images/ajax-loader.gif')}}" alt="loading"/>
+							   				</p>
+							   			
+							   			 	<p class="label">
+							   			 		{{ form_label(formApplyTerms.pbStudies, "Niveau d'étude minimum") }}
+							   			 	</p>
+											<div class="field">
+												{{ form_widget(formApplyTerms.pbStudies) }}
+							   				</div>
+							   			
+							   			 	<p class="label">
+							   			 		{{ form_label(formApplyTerms.firstDiploma, "Dîplome requis") }}
+							   			 	</p>
+							   			 	<div class="field">
+												{{ form_widget(formApplyTerms.firstDiploma) }}
+							   				</div>
+							   			
+							   			 	<p class="label">
+							   			 		{{ form_label(formApplyTerms.specialization, "Spécialisation requise") }}
+							   			 	</p>
+							   			 	<div class="field">
+												{{ form_widget(formApplyTerms.specialization) }}
+							   				</div>
+							   			
+							   			 	<p class="label">{{ form_label(formApplyTerms.numberWorkedYears, "Expérience professionnelle requise") }}
+							   			 	</p>
+											<div class="field">
+												{{ form_widget(formApplyTerms.numberWorkedYears) }}
+							   				</div>
+							   			
+							   			 	<p class="label">
+							   			 		{{ form_label(formApplyTerms.hoursPerWeek, "Temps de travail hebdomadaire") }}
+							   			 	</p>
+											<div class="field">
+												{{ form_widget(formApplyTerms.hoursPerWeek) }}
+							   				</div>
+							   			
+							   			 	<p class="label">
+							   			 		{{ form_label(formApplyTerms.paralleleContract, "Contrat parallèle autorisé") }}
+							   			 	</p>
+											<div class="field" style="border: none;">
+												{{ form_widget(formApplyTerms.paralleleContract) }}
+							   				</div>
+
+							   			 	{{ form_rest(formApplyTerms) }}
+							   			</div>
+							   		</div>
+							   	</div>
+
+
+					   			<div class="modal-footer">
+					   				<button class="btn" data-dismiss="modal" aria-hidden="true">Fermer</button>
+					   				<input type="submit" class="btn btn-primary" />
+					   			</div>
+					 		</form>
+				   		</div>
+					</div>
+					<!-- fin Modal-->
+
+					<h3 class="heading_w_icon">Conditions pour candidater</h3>
+
+					<div class="block_accordeon_type_1">
+						<div class="button_outer first">
+							<div class="button_inner">Niveau d'étude minimum : Bac + <span id="pbStudies">{{project.applyTerms.pbStudies}}</span></div></div>
+						<div class="accordeon_content">
+							<p>Le niveau d'étude minimum permet d'adapter la difficulté de chaque projet à chaque développeur et ainsi éviter les abandons en cours de projet.</p>
+						</div>
+						
+						<div class="button_outer"><div class="button_inner">Diplôme requis : <span id="firstDiploma">{{project.applyTerms.firstDiploma}}</span></div></div>
+						<div class="accordeon_content" style="display: none;">
+							<p>Le diplôme permet de cibler les connaissance et les capacités des développeurs. Certains seront spécialisé dans un domaine qui ne se prêtera pas forcément à tel ou tel projet.
+
+							{% if project.applyTerms.secondDiploma != '' %}
+								<h6>Autre diplôme valable : {{ project.applyTerms.secondDiploma }}</h6>
+							{% endif %}
+							</p>
+						</div>
+						
+						<div class="button_outer"><div class="button_inner">Spécialisation requise : <span id="specialization">{{project.applyTerms.specialization}}</span></div></div>
+						<div class="accordeon_content" style="display: none;">
+							<p>Tout comme le diplôme, la spécialité d'un cursus permet d'obtenir des connaissances pointues dans un domaine en particulier qui peu (ou non) se prêter à un projet ou à une tâche d'un projet en particulier.</p>
+						</div>
+
+						<div class="button_outer"><div class="button_inner">Expérience professionnelle requise : <span id="numberWorkedYears">{{project.applyTerms.numberWorkedYears}}</span> année(s)</div></div>
+						<div class="accordeon_content" style="display: none;">
+							<p>Certains projet nécessite des personnes ayant déjà travaillé avec une technologie ou avec un outil en particulier. Ces expériences professionnelles peuvent apporter maîtrise et gain de temps au projet.</p>
+						</div>
+
+						<div class="button_outer"><div class="button_inner">Temps de travail hebdomadaire : <span id="hoursPerWeek">{{project.applyTerms.hoursPerWeek}}</span> heure(s)</div></div>
+						<div class="accordeon_content" style="display: none;">
+							<p>Le bénéficiaire du projet annonce une approximation du temps que vous devrez consacrer au projet si vous le rejoingnez. En postulant au projet, vous vous engagez à être disponible pendant cette durée hebdomadaire.</p>
+						</div>
+
+						<div class="button_outer"><div class="button_inner">Contrat parallèle autorisé : <span id="paralleleContract">{% if project.applyTerms.paralleleContract == 1 %}oui {% else %} non {% endif %}</span></div></div>
+						<div class="accordeon_content" style="display: none;">
+							<p>En tant qu'employeur temporaire, le bénéficiaire du projet peut ou non décider de si vous avez le droit d'être engagé ailleurs, c'est-à-dire qu'il peut vouloir votre exclusivité durant le développement du projet.</p>
+						</div>
+					</div>
+
+					 <p>&nbsp;</p>
+
+					{% if app.user == project.owner %}
+						<a href="#modalChangeApplyTerms" role="button" data-toggle="modal" class="general_button small"><span>Modifier</span></a>
+					{% endif %}
+
+					<p>&nbsp;</p>
+
+					<h3 class="heading_w_icon">Candidater</h3>
+						
+						<p>
+							{% if project.recruitment == 1 %} 
+								{% if request is null %}
+								<form method="post" action="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">
+									<p><input type="submit" value="Postuler pour ce projet"/></p>
+								</form>
+								{% else %}
+								<div class="general_info_box success">
+									<p>Félicitations, vous faites déjà partie de ce projet.</p>
+								</div>
+								{% endif %}
+							{% else %}
+								<div class="general_info_box warning">
+									<p>Ce projet ne recrute pas actuellement.</p>
+								</div>
+								
+							{% endif %}
+						</p>
+					</div>
+
+					<div class="tab_content">
+						<div class="oh" style="padding-top:1px;">
+
+							<h3 class="heading_w_icon">Le projet</h3>
+							<ul class="list_2" style="padding-left: 25px;">
+								<li>Dates :
+									du {{ project.beginDate|date('d M Y') }} au {{ project.endingDate|date('d M Y') }}</li>
+								<li>Domaines :
+									{% for domain in project.domains %}
+										{{ domain.name }}{{ not loop.last ? ',' : ''}}
+									{% endfor %}
+								</li>
+								<li>Rémunération : 600 EUR. NET</li>
+							</ul>
+
+							<p>&nbsp;</p>
+
+							<h3 class="heading_w_icon">Le porteur du projet</h3>
+							<div class="about_author">
+								<div class="userpic">
+									<img style="width:45px; height:45px;" src="{% if project.owner.picture is not null %}{{contract.worker.picture.url}}.{{contract.worker.picture.extension}}{% else %}{{ asset('uploads/unknown.gif') }}{% endif %}" alt="user avatar">
+								</div>
+								<div class="about">
+									<p class="title">Ce projet a été créé par <a href="{{ path('fos_user_profile_showUser', {username: project.owner.username}) }}">{{ project.owner.name }}</a></p>
+									<p>{{ project.owner.description }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+					
+				<div class="separator" style="height:20px;"></div>
+
+				<div class="links">
+					<ul>
+						<li>Auteur : <a href="{{ path('fos_user_profile_showUser', {'username': project.owner.username}) }}">{{ project.owner.name}}</a></li>
+						<li>Dates : du {{ project.beginDate|date('d M Y') }} au {{ project.endingDate|date('d M Y') }}</li>
+						<li>Domaines : 
+							{% for domain in project.domains %}
+								{{ domain.name }}{{ not loop.last ? ',' : ''}}
+							{% endfor %}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</article>
+	</div>
+
+	<script type="text/javascript">
+		$('.block_accordeon_type_1').tabs('.block_accordeon_type_1 div.accordeon_content', {
+									tabs : '.button_outer',
+									effect : 'slide',
+									currentClose: false,
+									initialIndex : 0
+		});
+
+		$('.block_tabs_type_3 .tabs').tabs('.block_tabs_type_3 .tab_content', {
+			initialIndex : 0
+		});
+
+		//Routing.generate('project_modify', {"id":1})
+		$('#projectForm').submit(function(e) {
+			var url2 = '{{path("project_modifyResume", {id : project.id})}}';
+			$.ajax({
+	            type: "POST",
+	            url: url2,
+	            data: $(this).serialize(),
+	            cache: false,
+	            dataType : 'html',
+	            success: function(data){
+	            	var response=$(data);
+	                $('#twigShortDescription').text($(data).find("#resp_shortDesc").text());
+	                $('#twigLongDescription').text($(data).find("#resp_longDesc").text());
+	                   
+	            },
+	            beforeSend: function(){
+	            	$('#projectForm p').show();
+	            	$('#projectForm div').hide();
+	            },
+	            complete: function(){
+	            	$('#projectForm p').hide();
+	            	$('#projectForm div').show();
+	            	$('#projectForm .modal-footer > button.btn').trigger('click');
+	            }
+        	});
+        	return false;
+		});
+
+		$('#ApplyTermsForm').submit(function(e) {
+			var url2 = '{{path("project_modifyApplyTerms", {id : project.id})}}';
+			$.ajax({
+	            type: "POST",
+	            url: url2,
+	            data: $(this).serialize(),
+	            cache: false,
+	            dataType : 'json',
+	            success: function(data){
+	                $('#pbStudies').text(data.pbStudies);
+	                $('#firstDiploma').text(data.firstDiploma);
+	                $('#specialization').text(data.specialization);
+	                $('#numberWorkedYears').text(data.numberWorkedYears);
+	                $('#hoursPerWeek').text(data.hoursPerWeek);
+	                if(data.paralleleContract)
+	                	$('#paralleleContract').text("oui");
+	               	else
+	               		$('#paralleleContract').text("non");
+	            },
+	            beforeSend: function(){
+	            	$('#ApplyTermsForm p').show();
+	            	$('#ApplyTermsForm div').hide();
+	            },
+	            complete: function(){
+	            	$('#ApplyTermsForm p').hide();
+	            	$('#ApplyTermsForm div').show();
+	            	$('#ApplyTermsForm .modal-footer > button.btn').trigger('click');
+	            }
+        	});
+        	return false;
+		});
+
+		//prevent backing on tab index 0 when the modal is popped
+		$('#modalChangeProject').on('show', function () {
+			$('.block_tabs_type_3 .tabs').tabs('.block_tabs_type_3 .tab_content', {
+				initialIndex : 0
+			});
+		});
+
+		$('#modalChangeApplyTerms').on('show', function () {
+			$('.block_tabs_type_3 .tabs').tabs('.block_tabs_type_3 .tab_content', {
+				initialIndex : 1
+			});
+		});
+	</script>
+
+{% endblock %}
+
+{% if project.owner == app.user %}
+	{% block right %}
+	<div class="sidebar">
+		<div class="separator" style="height:37px;"></div>
+			{% include "MakinMindProjectBundle:Project:sidebar_owner_project.html.twig" with {'project': project} %}
+		<div class="separator" style="height:40px;"></div>
+	</div>
+	{% endblock %}
+{% endif %}
+

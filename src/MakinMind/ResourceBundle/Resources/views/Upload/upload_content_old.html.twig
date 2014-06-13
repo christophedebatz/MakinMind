@@ -1,0 +1,84 @@
+<div class="form">
+
+	<div class="block_tabs_type_1">
+		<div class="tabs">
+			<ul>
+				<li><a href="#1" class="current">Formulaire d'upload</a></li>
+				<li><a href="#2">Consultation de mes uploads</a></li>
+			</ul>
+		</div>
+		
+		<div class="tab_content">
+
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				<h4 class="fw_n">Informations générales</h4>
+
+				{{ form_errors(form) }}
+				<form action="{{ path('resource_homepage') }}" {{ form_enctype(form) }} method="POST">
+
+				    {{ form_errors(form.file) }}
+				    <p class="label">{{ form_label(form.file, "Fichier :") }} <span>(requis)</span></p>
+				 	<div class="field">{{ form_widget(form.file) }}</div>
+
+				 	{{ form_rest(form) }}
+				    <div class="button">
+						<input type="submit" class="general_button" value="Upload !">
+					</div>
+				</form>
+			</div>
+			<div class="clearboth"></div>
+		</div>
+
+		<div class="tab_content">
+			<div class="oh" style="padding-top:1px; width: 450px;">
+				<h4 class="fw_n"> </h4>
+
+				<h4>Images</h4>
+				<hr/>
+				{% for resource in list_uploads %}
+					{% if (resource.mimeType != null) and (resource.mimeType == "image/jpeg") %}
+						<img src="{{ resource.absoluteUrl() }}" alt=""/>
+						<p>{{ resource.WebUrl }}</p>
+					{% endif %}
+				{% endfor %}
+
+				<h4>Autres fichiers</h4>
+				<hr/>
+				{% for resource in list_uploads %}
+					{% if (resource.mimeType == null) or (resource.mimeType != "image/jpeg") %}
+						<p>{{ resource.WebUrl }}</p>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+
+
+	<!-- Button to trigger modal -->
+<a href="#myModal" role="button" class="btn" data-toggle="modal">Launch demo modal</a>
+ 
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+
+		
+	</div>
+
+	<script type="text/javascript">
+		$('.block_tabs_type_1 .tabs').tabs('.block_tabs_type_1 .tab_content', {
+			initialIndex : 0
+		});
+	</script>
+
+	</form>
+</div>

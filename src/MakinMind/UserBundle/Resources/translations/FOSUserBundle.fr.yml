@@ -1,0 +1,122 @@
+# Group
+group:
+    edit:
+        submit: Mettre à jour le groupe
+    show:
+        name: Nom du groupe
+    new:
+        submit: Créer le groupe
+    flash:
+        updated: Le groupe a été mis à jour
+        created: Le groupe a été créé
+        deleted: Le groupe a été supprimé
+
+# Security
+security:
+    login:
+        username: "Nom d'utilisateur : "
+        password: "Mot de passe : "
+        remember_me: Se souvenir de moi
+        submit: Connexion
+
+# Profile
+profile:
+    show:
+        username: Nom d'utilisateur
+        email: Adresse e-mail
+    edit:
+        submit: Mettre à jour
+    flash:
+        updated: Le profil a été mis à jour
+
+# Password change
+change_password:
+    submit: Valider
+    flash:
+        success: Le mot de passe a été modifié
+
+# Registration
+registration:
+    check_email: Un e-mail a été envoyé à l'adresse %email%. Veuillez suivre les instructions qui vous y sont indiquées.
+    confirmed: Félicitations %username%, votre compte MakinMind est maintenant activé. Nous espérons pouvoir vous compter parmis nos membres fidèles ! N'hésitez pas à consulter l'aide en ligne pour comprendre le fonctionnement de base du site et des outils proposés.
+    back: Retour à la page d'origine.
+    submit: Enregistrer
+    flash:
+        user_created: L'utilisateur a été créé avec succès
+    email:
+        subject: Bienvenue %username% !
+        message: |
+            Bonjour %username% !
+
+            Pour valider votre compte utilisateur, merci de vous rendre sur %confirmationUrl%
+
+            Cordialement,
+            L'équipe.
+
+# Password resetting
+resetting:
+    password_already_requested: Un nouveau mot de passe a déjà été demandé pour cet utilisateur dans les dernières 24 heures.
+    check_email: Un e-mail a été envoyé à l'adresse %email%. Veuillez suivre les instructions qui vous y sont indiquées.
+    request:
+        invalid_username: Le nom d'utilisateur ou l'adresse e-mail "%username%" n'existe pas.
+        username: "Nom d'utilisateur ou adresse e-mail :"
+        submit: Réinitialiser le mot de passe
+    reset:
+        submit: Modifier le mot de passe
+    flash:
+        success: Le mot de passe a été réinitialisé avec succès
+    email:
+        subject: Bienvenue %username% !
+        message: |
+            Bonjour %username% !
+
+            Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
+
+            Cordialement,
+            L'équipe.
+
+# Global strings
+layout:
+    logout: Déconnexion
+    login: Connexion
+    register: Enregistrer
+    logged_in_as: Bienvenue %username%
+
+# Form field labels
+fos_user_group_form_name: "Nom du groupe : "
+
+fos_user_profile_form_username:             "Nom d'utilisateur : "
+fos_user_profile_form_email:                "Adresse e-mail : "
+fos_user_profile_form_plainPassword_first:  "Mot de passe : "
+fos_user_profile_form_plainPassword_second: "Vérification : "
+
+fos_user_registration_form_username:             "Nom d'utilisateur : "
+fos_user_registration_form_email:                "Adresse e-mail : "
+fos_user_registration_form_plainPassword_first:  "Mot de passe : "
+fos_user_registration_form_plainPassword_second: "Vérification : "
+
+fos_user_resetting_form_new_first:  "Nouveau mot de passe : "
+fos_user_resetting_form_new_second: "Vérification : "
+
+fos_user_change_password_form_new_first:    "Nouveau mot de passe : "
+fos_user_change_password_form_new_second:   "Vérification : "
+fos_user_change_password_form_current:  "Mot de passe actuel : "
+
+fos_user_profile_form_user_job: "Intitulé de votre travail actuel : "
+fos_user_profile_form_user_company: "Nom de l'entreprise pour laquelle vous travaillez :"
+fos_user_profile_form_user_workSocialURL: "URL de votre profil professionnel en ligne (Linkedin, Viadeo...) :"
+fos_user_profile_form_user_facebookURL: "URL de votre profil Facebook :"
+fos_user_profile_form_user_twitterURL: "URL de votre profil Twitter :"
+fos_user_registration_form_firstname: "Prénom : "
+fos_user_registration_form_lastname: "Nom : "
+fos_user_profile_form_user_username: "Nom d'utilisateur : "
+fos_user_profile_form_user_email: "Adresse e-mail : "
+fos_user_profile_form_current: "Mot de passe : "
+fos_user_profile_form_user_firstname: "Prénom : "
+fos_user_profile_form_user_lastname: "Nom : "
+fos_user_profile_form_user_phone: "N° de téléphone : "
+fos_user_profile_form_user_address: "Adresse : "
+fos_user_profile_form_user_zipcode: "Code postal : "
+fos_user_profile_form_user_city: "Ville : "
+fos_user_profile_form_user_country: "Pays : "
+fos_user_profile_form_user_birthdate: "Naissance (jj-mm-aaaa) :"

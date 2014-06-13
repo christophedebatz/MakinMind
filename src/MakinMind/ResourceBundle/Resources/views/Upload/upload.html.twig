@@ -1,0 +1,36 @@
+{% extends "::layout.html.twig" %}
+{% block title %}{{ parent() }} :: Upload de fichier {% endblock %}
+{% block titlebar_title %} Upload de fichier {% endblock %}
+{% block titlebar_ariane %} {{ parent() }} <span>Upload de fichier</span> {% endblock %}
+
+{% block slider %}{% endblock %}
+{% block content_type %}{% endblock%}
+
+{% block resources %}
+	{{parent()}} 
+	<script type="text/javascript" src="{{ asset('skydream/bootstrap/js/bootstrap.min.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('skydream/bootstrap/css/bootstrap.min.css') }}" type="text/css">
+
+	<style type="text/css">
+	.modal.large{
+	    width: 750px;
+	    margin-left: -390px;
+	}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="block_contact_us_type_1">
+    <div class="send_message">
+        <h4>Mes uploads</h4>
+        <p class="text_subtitle_1">Uploadez vos fichiers et retrouvez-les dans la rubrique "Consultation de mes uploads" !</p>
+
+ <p class="tac">{{ app.session.getFlash('info') }}</p>
+
+            {% include "MakinMindResourceBundle:Upload:upload_content.html.twig" %}
+
+    </div>
+</div>
+
+{% endblock %} 

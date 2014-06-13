@@ -1,0 +1,33 @@
+{% form_theme form theme %}
+{{ form_errors(form) }}
+
+<div class="form">
+	<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" style="width: 400px;">
+
+	    <p class="label">Votre nom d'utilisateur : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.username, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	<p class="label">Votre nom : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.lastname, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	<p class="label">Votre prénom : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.firstname, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	<p class="label">Votre e-mail : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.email, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	<p class="label">Votre mot de passe : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.plainPassword.first, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	<p class="label">Confirmation : <span>(requis)</span></p>
+	 	<div class="field">{{ form_widget(form.plainPassword.second, { 'attr': {'class': 'req'} }) }}</div>
+
+	 	{{ form_rest(form) }}
+	 	
+	    <div class="separator" style="height:20px;"></div>
+
+	    <div class="button">
+			<input type="submit" class="general_button" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}">
+		</div>
+	</form>
+</div>

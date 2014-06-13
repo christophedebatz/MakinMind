@@ -1,0 +1,23 @@
+<div class="block_categories">
+	<h6>Projet</h6>
+	<ul class="list_5">
+		<li><a href="{{ path('show_project', {'id': project.id, 'url': project.url}) }}">{{project.name|title}}</a></li>
+	</ul>
+
+	<p>&nbsp;</p>
+
+	<h6>Métier</h6>
+	<ul class="list_5">
+		<li><a href="{{ path('project_contract', {'id': project.id, 'url': project.url}) }}">Contrat de travail</a></li>
+		<li><a href="{{ path('project_list_developpers', {'id': project.id, 'url': project.url}) }}">Collaborateurs</a></li>
+	</ul>
+
+	<p>&nbsp;</p>
+
+	<h6>Recrutement</h6>
+	<ul class="list_5">
+		<li><a href="{{ path('project_candidates', {'id': project.id, 'url': project.url}) }}">Candidats postulants</a></li>
+		<li><a href="{{ path('project_retained_candidates', {'id': project.id, 'url': project.url}) }}">Candidats choisis</a></li>
+	</ul>
+</div>
+
